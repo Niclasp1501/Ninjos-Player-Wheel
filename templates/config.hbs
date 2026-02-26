@@ -1,40 +1,52 @@
-<form autocomplete="off">
-    <header class="config-header">
-        <h1><i class="fas fa-dice-d20"></i> Player Wheel Configuration</h1>
-        <p>Manage the list of players for the wheel selection.</p>
+<form autocomplete="off" class="ninjos-player-wheel-container" style="display: block; padding: 10px;">
+    <!-- Simple overrides for the config dialog to reuse the global theme classes where possible -->
+    <header class="sidebar-header" style="margin: -15px -15px 15px -15px; border-radius: 4px 4px 0 0;">
+        <h1><i class="fas fa-dice-d20"></i> {{localize "WHEEL.ConfigTitle"}}</h1>
+        <p>{{localize "WHEEL.Config.Description"}}</p>
     </header>
 
-    <div class="form-group">
-        <label>Player List</label>
-        <div class="player-controls">
-            <button class="add-player"><i class="fas fa-plus"></i> Add Player</button>
-            <button class="reset-status"><i class="fas fa-undo"></i> Reset All "Done"</button>
+    <div class="form-group"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0;">
+        <label style="margin: 0; font-size: 1.1rem; color: var(--ninjos-player-wheel-primary-red);">{{localize
+            "WHEEL.Config.Presets"}}</label>
+        <div class="header-actions">
+            <button type="button" class="add-player" style="padding: 5px 10px;"><i class="fas fa-plus"></i> {{localize
+                "WHEEL.Config.AddPlayer"}}</button>
+            <button type="button" class="reset-status" style="padding: 5px 10px;"><i class="fas fa-undo"></i> {{localize
+                "WHEEL.Config.ResetStatus"}}</button>
         </div>
     </div>
 
-    <ul class="player-list">
+    <ul class="wheel-player-list"
+        style="max-height: 400px; overflow-y: auto; padding: 5px; border: 1px solid var(--ninjos-player-wheel-border-color); background: var(--ninjos-player-wheel-bg-color); border-radius: 4px; margin-bottom: 15px;">
         {{#each players as |player i|}}
-        <li class="player-row" data-index="{{i}}">
-            <div class="form-fields">
-                <input type="text" name="players.{{i}}.name" value="{{player.name}}" placeholder="Player Name" />
-                <input type="color" name="players.{{i}}.color" value="{{player.color}}" />
-                <label class="checkbox">
-                    <input type="checkbox" name="players.{{i}}.active" {{checked player.active}} /> Active
-                </label>
-                <label class="checkbox" title="Was selected recently?">
-                    <input type="checkbox" name="players.{{i}}.wasSelected" {{checked player.wasSelected}} /> Done?
-                </label>
-                <button type="button" class="remove-player" data-index="{{i}}"><i class="fas fa-trash"></i></button>
+        <li class="player-item" data-index="{{i}}" style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" name="players.{{i}}.name" value="{{player.name}}" placeholder="Player Name"
+                style="flex: 1;" />
+            <input type="color" name="players.{{i}}.color" value="{{player.color}}"
+                style="width: 40px; height: 35px; cursor: pointer; border: 1px solid var(--ninjos-player-wheel-border-color); border-radius: 4px;" />
+            <label class="checkbox" style="display: flex; align-items: center; gap: 5px; margin: 0;">
+                <input type="checkbox" name="players.{{i}}.active" {{checked player.active}} /> {{localize
+                "WHEEL.Config.Active"}}
+            </label>
+            <label class="checkbox" title="{{localize " WHEEL.Config.WasSelected"}}"
+                style="display: flex; align-items: center; gap: 5px; margin: 0;">
+                <input type="checkbox" name="players.{{i}}.wasSelected" {{checked player.wasSelected}} /> {{localize
+                "WHEEL.Config.Done"}}
+            </label>
+            <div class="player-actions" style="margin-left: auto;">
+                <a class="remove-player" data-index="{{i}}" style="font-size: 1.2rem;"><i class="fas fa-trash"></i></a>
             </div>
         </li>
         {{else}}
-        <li class="empty">No players added yet.</li>
+        <li class="empty" style="text-align: center; padding: 15px; color: #666; font-style: italic;">{{localize
+            "WHEEL.Config.NoPlayers"}}</li>
         {{/each}}
     </ul>
 
-    <footer class="sheet-footer">
-        <button type="submit" name="submit">
-            <i class="far fa-save"></i> Save Changes
+    <footer class="sheet-footer" style="display: flex; justify-content: flex-end;">
+        <button type="submit" name="submit" style="font-size: 1.1rem; padding: 10px 20px;">
+            <i class="far fa-save"></i> {{localize "WHEEL.Config.SaveChanges"}}
         </button>
     </footer>
 </form>

@@ -1,57 +1,64 @@
-<form class="wheel-control-form">
-    <header class="wheel-header">
-        <h1>{{localize "WHEEL.Control.Title"}}</h1>
-        <p>{{localize "WHEEL.Control.Description"}}</p>
-    </header>
+<form class="wheel-control-form ninjos-player-wheel-container">
+    <div class="main-column">
+        <!-- Header -->
+        <header class="sidebar-header" style="text-align: center;">
+            <h1>{{localize "WHEEL.Control.Title"}}</h1>
+            <p>{{localize "WHEEL.Control.Description"}}</p>
+        </header>
 
-    <div class="wheel-players-section">
-        <div class="player-list-header">
-            <h3>{{localize "WHEEL.Config.PlayerList"}}</h3>
-            <div class="header-actions">
-                <button type="button" class="player-add" title="{{localize " WHEEL.Control.AddPlayer"}}">
-                    <i class="fas fa-plus"></i>
-                </button>
-                <button type="button" class="player-reset" title="{{localize " WHEEL.Config.ResetStatus"}}">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
+        <!-- Body / Player List -->
+        <div class="sidebar-body">
+            <div class="player-list-header">
+                <h3>{{localize "WHEEL.Config.PlayerList"}}</h3>
+                <div class="header-actions">
+                    <button type="button" class="player-add" title="{{localize " WHEEL.Control.AddPlayer"}}">
+                        <i class="fas fa-plus"></i> <span
+                            style="font-weight: 600; font-size: 0.9em; margin-left: 2px;">{{localize
+                            "WHEEL.Control.AddUI"}}</span>
+                    </button>
+                    <button type="button" class="player-reset" title="{{localize " WHEEL.Config.ResetStatus"}}">
+                        <i class="fas fa-sync-alt"></i> <span
+                            style="font-weight: 600; font-size: 0.9em; margin-left: 2px;">{{localize
+                            "WHEEL.Control.ResetUI"}}</span>
+                    </button>
+                </div>
             </div>
+
+            <ul class="wheel-player-list">
+                {{#if hasPlayers}}
+                {{#each players}}
+                <li class="player-item {{#if this.wasSelected}}done{{/if}} {{#unless this.active}}inactive{{/unless}}">
+                    <div class="player-info">
+                        <span class="player-color-dot" style="background-color: {{this.color}};"></span>
+                        {{#if this.wasSelected}}
+                        <i class="fas fa-trophy" style="color: #daa520; margin-right: 5px;"
+                            title="{{localize 'WHEEL.Control.Winner'}}"></i>
+                        {{/if}}
+                        <input type="text" class="player-name-input" data-index="{{@index}}" value="{{this.name}}"
+                            title="Click to edit name">
+                    </div>
+                    <div class="player-actions">
+                        <a class="player-toggle" data-index="{{@index}}" title="{{localize " WHEEL.Control.Toggle"}}">
+                            <i class="fas {{#if this.active}}fa-check-circle{{else}}fa-times-circle{{/if}}"></i>
+                        </a>
+                        <a class="player-remove" data-index="{{@index}}" title="{{localize " WHEEL.Control.Remove"}}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </li>
+                {{/each}}
+                {{else}}
+                <li class="no-players" style="padding: 10px; color: #666; font-style: italic; text-align: center;">
+                    {{localize "WHEEL.Config.NoPlayers"}}</li>
+                {{/if}}
+            </ul>
         </div>
 
-        <ul class="wheel-player-list">
-            {{#if hasPlayers}}
-            {{#each players}}
-            <li class="player-item {{#if this.wasSelected}}done{{/if}} {{#unless this.active}}inactive{{/unless}}">
-                <div class="player-info">
-                    <span class="player-color-dot" style="background-color: {{this.color}};"></span>
-                    {{#if this.wasSelected}}
-                    <i class="fas fa-trophy" style="color: #daa520; margin-right: 5px;"
-                        title="{{localize 'WHEEL.Control.Winner'}}"></i>
-                    {{/if}}
-                    <input type="text" class="player-name-input" data-index="{{@index}}" value="{{this.name}}"
-                        title="Click to edit name">
-                </div>
-                <div class="player-actions">
-                    <a class="player-toggle" data-index="{{@index}}" title="{{localize " WHEEL.Control.Toggle"}}">
-                        <i class="fas {{#if this.active}}fa-check-circle{{else}}fa-times-circle{{/if}}"></i>
-                    </a>
-                    <a class="player-remove" data-index="{{@index}}" title="{{localize " WHEEL.Control.Remove"}}">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                </div>
-            </li>
-            {{/each}}
-            {{else}}
-            <li class="no-players">{{localize "WHEEL.Config.NoPlayers"}}</li>
-            {{/if}}
-        </ul>
+        <!-- Footer / Spin Action -->
+        <div class="sidebar-footer spin-actions-container" style="text-align: center;">
+            <button type="button" class="spin-button" {{#if canSpin}}{{else}}disabled{{/if}}>
+                <i class="fas fa-dharmachakra" style="font-size: 1.2em;"></i> {{localize "WHEEL.Control.SpinButton"}}
+            </button>
+        </div>
     </div>
-
-    <footer class="wheel-footer" style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
-        <button type="button" class="spin-button" {{#if canSpin}}{{else}}disabled{{/if}}>
-            <i class="fas fa-dharmachakra"></i> {{localize "WHEEL.Control.SpinButton"}}
-        </button>
-        <button type="button" class="close-wheel-button" title="Rad bei allen schließen" style="background: #5c0002; color: #fff; border: 1px solid #4b1d16; min-width: 45px; display: flex; justify-content: center; align-items: center; cursor: pointer;">
-            <i class="fas fa-times"></i>
-        </button>
-    </footer>
 </form>

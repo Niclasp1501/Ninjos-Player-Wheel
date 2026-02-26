@@ -6,6 +6,11 @@
     "WHEEL.Config.PlayerList": "Player List",
     "WHEEL.Config.NoPlayers": "No players added yet.",
     "WHEEL.Config.SaveChanges": "Save Changes",
+    "WHEEL.Config.Description": "Manage your player presets",
+    "WHEEL.Config.Presets": "Player Presets",
+    "WHEEL.Config.Active": "Active",
+    "WHEEL.Config.WasSelected": "Was selected recently?",
+    "WHEEL.Config.Done": "Done",
     "WHEEL.Control.Title": "Player Selection",
     "WHEEL.Control.Description": "Add players and let the wheel spin for everyone!",
     "WHEEL.Control.ConnectedPlayers": "Connected Players",
@@ -14,6 +19,8 @@
     "WHEEL.Control.NoCandidates": "No eligible players available (or all were already selected).",
     "WHEEL.Control.SpinButton": "SPIN THE WHEEL!",
     "WHEEL.Control.SpinTool": "Spin Player Wheel",
+    "WHEEL.Control.AddUI": "NEW",
+    "WHEEL.Control.ResetUI": "RESET",
     "WHEEL.Wheel.Winner": "{name} was selected!",
     "WHEEL.Wheel.WinnerSelected": "{name} was selected!"
 }

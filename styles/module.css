@@ -1,71 +1,93 @@
-/* Configuration Dialog */
-.wheel-config .form-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+/* --- Global Theme Variables --- */
+:root {
+    /* D&D Reference Design - Strict Red/Gold Theme */
+    --ninjos-player-wheel-bg-color: #fdfbf7;
+    /* Parchment Light */
+    --ninjos-player-wheel-text-color: #1a1a1a;
+    /* Almost black for readability */
+    --ninjos-player-wheel-card-bg: #ffffff;
+    /* Pure white for inner cards/inputs */
+    --ninjos-player-wheel-nav-bg: #f4f1ea;
+    /* Slightly darker parchment for sidebars */
+    --ninjos-player-wheel-border-color: #dcd6cc;
+    /* Soft beige border */
+
+    /* Strict Theme Colors */
+    --ninjos-player-wheel-primary-red: #8B0000;
+    /* Dark D&D Red for Headers/Buttons */
+    --ninjos-player-wheel-accent-gold: #D4AF37;
+    /* Metallic Gold for Borders/Highlights */
+    --ninjos-player-wheel-header-text: #ffffff;
+    /* White text on red backgrounds */
+    --ninjos-player-wheel-canvas-bg: #fbf9f4;
+    /* Main content area background */
+    --ninjos-player-wheel-font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    --ninjos-player-wheel-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --ninjos-player-wheel-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.wheel-config .player-list {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #700000;
-    padding: 5px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-}
-
-.wheel-config .player-row {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    background: rgba(255, 255, 255, 0.05);
-    margin-bottom: 2px;
-    border-radius: 3px;
-}
-
-.wheel-config .player-row input {
-    margin-right: 5px;
-}
-
-/* Wheel Display */
+/* --- Window Overrides & Base Container --- */
 .ninjos-player-wheel-window .window-content {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    overflow: hidden;
-    background: url("/ui/parchment.jpg") repeat;
-    /* Standard Foundry Parchment if available, or fallback color */
-    background-color: #f1ebd0;
-    color: #4b4a44;
-    padding: 8px;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: var(--ninjos-player-wheel-bg-color) !important;
 }
 
-/* Control Form */
-.wheel-control-form {
+.ninjos-player-wheel-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--ninjos-player-wheel-bg-color);
+    font-family: var(--ninjos-player-wheel-font-main);
+    color: var(--ninjos-player-wheel-text-color);
+}
+
+.ninjos-player-wheel-container * {
+    box-sizing: border-box;
+}
+
+/* --- Layout Structure --- */
+/* Main Vertical Column */
+.ninjos-player-wheel-container .main-column {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    z-index: 10;
+    overflow-y: hidden;
 }
 
-.wheel-header {
-    border-bottom: 2px solid #782e22;
-    /* DnD Red */
-    padding-bottom: 5px;
-    margin-bottom: 5px;
+/* Header (D&D Style) */
+.ninjos-player-wheel-container .sidebar-header {
+    background-color: var(--ninjos-player-wheel-primary-red);
+    color: var(--ninjos-player-wheel-header-text);
+    padding: 15px 20px;
+    border-bottom: 2px solid var(--ninjos-player-wheel-accent-gold);
 }
 
-.wheel-header h1 {
+.ninjos-player-wheel-container .sidebar-header h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+    color: var(--ninjos-player-wheel-header-text);
     border: none;
-    font-family: "Modesto Condensed", "Palatino Linotype", serif;
-    font-size: 1.5em;
-    color: #782e22;
+    text-shadow: none;
 }
 
-/* Player List */
-.wheel-players-section {
-    background: rgba(0, 0, 0, 0.05);
-    border: 1px solid #c9c7b8;
-    border-radius: 5px;
+.ninjos-player-wheel-container .sidebar-header p {
+    color: rgba(255, 255, 255, 0.85);
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+}
+
+/* Sidebar Body (Player List) */
+.ninjos-player-wheel-container .sidebar-body {
+    flex: 1;
+    overflow-y: auto;
     padding: 10px;
 }
 
@@ -73,96 +95,231 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #782e22;
-    margin-bottom: 5px;
-    padding-bottom: 2px;
+    border-bottom: 1px solid var(--ninjos-player-wheel-border-color);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 .player-list-header h3 {
     margin: 0;
     border: none;
-    font-size: 1.1em;
+    font-size: 1.1rem;
+    color: var(--ninjos-player-wheel-primary-red);
+    font-weight: 700;
 }
 
-.wheel-player-list {
+.ninjos-player-wheel-container .wheel-player-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 200px;
-    overflow-y: auto;
 }
 
-.player-item {
+.ninjos-player-wheel-container .player-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 8px 10px;
+    border: 1px solid var(--ninjos-player-wheel-border-color);
+    background: var(--ninjos-player-wheel-card-bg);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    transition: all 0.2s;
 }
 
-.player-item.done {
-    background: rgba(218, 165, 32, 0.2);
-    /* Golden tint */
-    border: 1px solid #daa520;
-    opacity: 0.8;
+.ninjos-player-wheel-container .player-item:hover {
+    box-shadow: var(--ninjos-player-wheel-shadow-sm);
+    border-color: var(--ninjos-player-wheel-accent-gold);
 }
 
-.player-item.done .player-name-input {
+.ninjos-player-wheel-container .player-item.done {
+    background: rgba(212, 175, 55, 0.15);
+    /* Gold tint */
+    border-color: var(--ninjos-player-wheel-accent-gold);
+}
+
+.ninjos-player-wheel-container .player-item.done .player-name-input {
     text-decoration: line-through;
-    color: #4b4a44;
+    color: #666;
 }
 
-.player-item.inactive {
-    opacity: 0.4;
-    background: rgba(0, 0, 0, 0.1);
+.ninjos-player-wheel-container .player-item.inactive {
+    opacity: 0.5;
+    background: #eaeaea;
     filter: grayscale(100%);
 }
 
-.player-info {
+.ninjos-player-wheel-container .player-info {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex: 1;
 }
 
-.player-color-dot {
-    width: 12px;
-    height: 12px;
+.ninjos-player-wheel-container .player-color-dot {
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    border: 1px solid #000;
+    border: 1px solid var(--ninjos-player-wheel-border-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.player-actions a {
-    color: #4b4a44;
-    margin-left: 5px;
+.ninjos-player-wheel-container .player-actions a {
+    color: #666;
+    margin-left: 8px;
     cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.2s;
 }
 
-.player-actions a:hover {
-    color: #782e22;
-    text-shadow: 0 0 5px rgba(120, 46, 34, 0.5);
+.ninjos-player-wheel-container .player-actions a:hover {
+    color: var(--ninjos-player-wheel-primary-red);
+}
+
+/* --- Main Content Area Removing & Footer Adding --- */
+.ninjos-player-wheel-container .sidebar-footer {
+    padding: 15px 20px;
+    background-color: var(--ninjos-player-wheel-nav-bg);
+    border-top: 1px solid var(--ninjos-player-wheel-border-color);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ninjos-player-wheel-container .spin-actions-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    align-items: center;
+}
+
+/* --- Standard UI Elements --- */
+/* Standard Button */
+.ninjos-player-wheel-container button {
+    background-color: var(--ninjos-player-wheel-primary-red);
+    color: var(--ninjos-player-wheel-header-text);
+    border: 1px solid var(--ninjos-player-wheel-accent-gold);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-family: var(--ninjos-player-wheel-font-main);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--ninjos-player-wheel-shadow-sm);
+}
+
+.ninjos-player-wheel-container button:hover {
+    background-color: #660000;
+    /* Darker red */
+    box-shadow: var(--ninjos-player-wheel-shadow-md);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.ninjos-player-wheel-container button:disabled {
+    background-color: #7a7a7a;
+    border-color: #555;
+    color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+/* Icon Buttons specifically on sidebar */
+.ninjos-player-wheel-container .header-actions button {
+    padding: 5px 8px;
+    font-size: 0.9rem;
+    background-color: var(--ninjos-player-wheel-card-bg);
+    color: var(--ninjos-player-wheel-primary-red);
+    border: 1px solid var(--ninjos-player-wheel-border-color);
+}
+
+.ninjos-player-wheel-container .header-actions button:hover {
+    background-color: var(--ninjos-player-wheel-primary-red);
+    color: #fff;
+    border-color: var(--ninjos-player-wheel-accent-gold);
 }
 
 /* Spin Button */
-.spin-button {
-    background: #782e22;
-    color: #fff;
-    border: 1px solid #4b1d16;
-    font-size: 1.2em;
-    font-family: "Modesto Condensed", serif;
+.ninjos-player-wheel-container .spin-button {
+    font-size: 1.5rem;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
 }
 
-.spin-button:hover {
-    background: #9c3b2b;
-    box-shadow: 0 0 10px #9c3b2b;
+/* Close Wheel Button */
+.ninjos-player-wheel-container .close-wheel-button {
+    background-color: var(--ninjos-player-wheel-card-bg);
+    color: var(--ninjos-player-wheel-text-color);
+    border-color: var(--ninjos-player-wheel-border-color);
 }
 
-.spin-button:disabled {
-    background: #555;
-    cursor: not-allowed;
-    box-shadow: none;
+.ninjos-player-wheel-container .close-wheel-button:hover {
+    background-color: var(--ninjos-player-wheel-nav-bg);
+    color: var(--ninjos-player-wheel-primary-red);
 }
 
-/* Winner Overlay */
+/* Inputs & Selects */
+.ninjos-player-wheel-container input[type="text"],
+.ninjos-player-wheel-container select {
+    width: 100%;
+    padding: 8px 10px;
+    background-color: var(--ninjos-player-wheel-card-bg);
+    border: 1px solid var(--ninjos-player-wheel-border-color);
+    border-radius: 4px;
+    color: var(--ninjos-player-wheel-text-color);
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.ninjos-player-wheel-container input[type="text"]:focus,
+.ninjos-player-wheel-container select:focus {
+    outline: none;
+    border-color: var(--ninjos-player-wheel-accent-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+/* Remove default background from input inside the list */
+.ninjos-player-wheel-container .player-name-input {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ninjos-player-wheel-text-color);
+    width: 100%;
+}
+
+.ninjos-player-wheel-container .player-name-input:focus {
+    box-shadow: none !important;
+    border-bottom: 2px solid var(--ninjos-player-wheel-accent-gold) !important;
+    border-radius: 0 !important;
+}
+
+/* Field Groups */
+.ninjos-player-wheel-container .form-group {
+    margin-bottom: 15px;
+    padding: 0 15px;
+}
+
+.ninjos-player-wheel-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+/* --- Winner Overlay --- */
 .winner-overlay {
     position: fixed;
     top: 50%;
@@ -178,8 +335,8 @@
     background: rgba(0, 0, 0, 0.8);
     padding: 20px 40px;
     border-radius: 10px;
-    border: 2px solid #daa520;
-    box-shadow: 0 0 50px rgba(218, 165, 32, 0.5);
+    border: 2px solid var(--ninjos-player-wheel-accent-gold);
+    box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
     pointer-events: none;
 }
 
@@ -200,12 +357,12 @@
     font-family: "Modesto Condensed", serif;
     font-size: 4em;
     color: #ffffff;
-    text-shadow: 0 0 10px #daa520, 0 0 20px #daa520;
+    text-shadow: 0 0 10px var(--ninjos-player-wheel-accent-gold), 0 0 20px var(--ninjos-player-wheel-accent-gold);
     font-weight: bold;
     text-transform: uppercase;
 }
 
-/* Wheel Display */
+/* --- Wheel Display Nuke CSS --- */
 #ninjos-player-wheel-display {
     z-index: 99999999 !important;
     background: none;
@@ -230,32 +387,17 @@
     width: auto !important;
     height: auto !important;
     z-index: 2147483647 !important;
-    /* Absoluter System-Maximalwert */
     background: transparent !important;
     pointer-events: none !important;
     display: block !important;
 }
 
-/* Player Input */
-.player-name-input {
-    background: transparent;
-    border: none;
-    border-bottom: 1px dotted transparent;
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-    width: 200px;
-}
-
-.player-name-input:hover,
-.player-name-input:focus {
-    background: rgba(255, 255, 255, 0.5);
-    border-bottom: 1px solid #782e22;
-    outline: none;
+#ninjos-player-wheel-display .window-header {
+    display: none !important;
 }
 
 #ninjos-player-wheel-display .window-content {
-    background: none;
+    background: none !important;
     overflow: visible;
     display: flex;
     justify-content: center;
@@ -277,7 +419,7 @@
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
-    border-top: 40px solid #782e22;
+    border-top: 40px solid var(--ninjos-player-wheel-primary-red);
     z-index: 10;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
@@ -286,7 +428,6 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    /* Border removed to hide wobble */
     overflow: hidden;
     position: relative;
     background: #1a1a1a;
@@ -299,7 +440,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    /* Transformation handled by JS */
 }
 
 .segment {
@@ -309,13 +449,6 @@
     width: 50%;
     height: 50%;
     transform-origin: 0% 100%;
-    /* Bottom Left of the segment rect is the center of circle */
-    /* This depends heavily on how we construct the HTML. 
-       Actually, creating segments with pure CSS/HTML using skew/rotate is tricky for dynamic N.
-       SVG might be better, or Canvas.
-       Let's stick to CSS conic-gradient for background, and positioned text.
-       OR simple rotated divs if N is small.
-    */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -324,7 +457,6 @@
 .segment-text {
     position: absolute;
     left: 20px;
-    /* Offset from center */
     top: 50%;
     transform: translateY(-50%);
     font-family: "Signika", sans-serif;
@@ -335,84 +467,28 @@
     text-shadow: 1px 1px 2px black;
 }
 
-
-/* Control Dialog Theme Overrides */
+/* Control Dialog Theme Overrides Fallback */
 .ninjos-player-wheel-window {
-    background: url("/ui/parchment.jpg") repeat !important;
-    background-color: #f1ebd0 !important;
-    color: #1a1a1a !important;
-    border: 2px solid #782e22 !important;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
 }
 
 .ninjos-player-wheel-window .window-header {
-    background: transparent !important;
-    border-bottom: 2px solid #782e22 !important;
-    color: #4b1d16 !important;
+    background: var(--ninjos-player-wheel-primary-red) !important;
+    border-bottom: 2px solid var(--ninjos-player-wheel-accent-gold) !important;
+    color: var(--ninjos-player-wheel-header-text) !important;
 }
 
-/* Hide header for the wheel display specifically */
-#ninjos-player-wheel-display .window-header {
-    display: none !important;
+/* Form Settings Dialog Specific Styles */
+.wheel-config {
+    background: var(--ninjos-player-wheel-canvas-bg) !important;
 }
 
-.ninjos-player-wheel-window .window-content {
-    background: transparent !important;
-    color: #1a1a1a !important;
+.wheel-config .window-content {
+    background: var(--ninjos-player-wheel-canvas-bg) !important;
+    color: var(--ninjos-player-wheel-text-color) !important;
+    padding: 15px !important;
 }
-
-.wheel-control-form .wheel-header h1 {
-    color: #782e22;
-    text-shadow: none;
-}
-
-.wheel-control-form p,
-.wheel-control-form label {
-    color: #1a1a1a;
-}
-
-.wheel-players-section {
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid #c9c7b8;
-}
-
-.player-item {
-    background: rgba(255, 255, 255, 0.6);
-    border-bottom: 1px solid #c9c7b8;
-    margin-bottom: 4px;
-    border-radius: 4px;
-}
-
-.player-item.done {
-    background: rgba(218, 165, 32, 0.3);
-    /* Golden tint */
-    border: 1px solid #daa520;
-    opacity: 1;
-    /* Reset opacity, handle visual via color */
-}
-
-.player-item.done .player-name-input {
-    text-decoration: line-through;
-    color: #555;
-}
-
-.player-item.inactive {
-    opacity: 0.6;
-    background: rgba(200, 200, 200, 0.4);
-    filter: grayscale(100%);
-}
-
-.player-name-input {
-    color: #1a1a1a;
-    font-weight: bold;
-}
-
-.player-actions a {
-    color: #4b1d16;
-}
-
-.player-actions a:hover {
-    color: #d00;
-}
-
-/* End of file */
