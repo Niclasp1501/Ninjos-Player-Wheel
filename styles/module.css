@@ -492,29 +492,3 @@
     color: var(--ninjos-player-wheel-text-color) !important;
     padding: 15px !important;
 }
-
-/* Player List Injected Button */
-.ninjos-player-wheel-launch-btn {
-    width: calc(100% - 10px);
-    margin: 5px;
-    background: rgba(139, 0, 0, 0.8) !important;
-    /* D&D Red with slight transparency */
-    color: #ffffff !important;
-    border: 1px solid var(--ninjos-player-wheel-accent-gold) !important;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 0.9em;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.ninjos-player-wheel-launch-btn:hover {
-    background: var(--ninjos-player-wheel-primary-red) !important;
-    box-shadow: 0 0 8px var(--ninjos-player-wheel-accent-gold);
-    text-shadow: 0 0 4px white;
-}

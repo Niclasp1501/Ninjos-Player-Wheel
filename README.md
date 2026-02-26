@@ -26,7 +26,7 @@ You can install this module by pasting the manifest link in your Foundry VTT **A
 
 There are two easy ways for the Game Master to open the Player Wheel:
 1. **Shortcut:** Press `Shift + W` on your keyboard.
-2. **Player List Button:** Click the new "Player Selection" ☸️ button located at the bottom of the **Player List** box (bottom left of your Foundry screen).
+2. **Token Controls Bar:** Click the new "Player Selection" ☸️ icon located in the main Token Controls toolbar on the left side of your Foundry screen.
 
 Once the wheel is open:
 - The compact UI allows you to quickly **Add (NEW)**, rename, or recolor player entries. 
@@ -57,7 +57,7 @@ Du kannst dieses Modul installieren, indem du den Manifest-Link in den Reiter **
 
 Es gibt zwei einfache Wege für den Spielleiter, das Rad zu öffnen:
 1. **Tastenkombination:** Drücke `Shift + W` auf deiner Tastatur.
-2. **Spielerlisten-Button:** Klicke einfach auf den "Spieler Auswahl" ☸️ Button ganz unten im **Spieler-Fenster** (unten links in Foundry).
+2. **Werkzeugleiste (Token Controls):** Klicke einfach auf das "Spieler Auswahl" ☸️ Icon direkt in der Hauptwerkzeugleiste (Token Controls) auf der linken Seite in Foundry.
 
 Sobald das Rad offen ist:
 - Die kompakte Oberfläche ermöglicht es dir, schnell Spieler hinzuzufügen (**NEU**), umzubenennen oder farblich anzupassen.

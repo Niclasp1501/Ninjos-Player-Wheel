@@ -88,23 +88,47 @@ Hooks.on("ready", () => {
     }
 });
 
-// 5. Inject Button into Player List (GM Only)
-Hooks.on("renderPlayerList", (app, html, data) => {
-    if (!game.user.isGM) return;
+// 5. Inject Button into Scene Controls (Token Bar)
+Hooks.on('getSceneControlButtons', (controls) => {
+    // Only show to GMs
+    if (!game.user || !game.user.isGM) return;
 
-    const button = $(`
-        <button class="ninjos-player-wheel-launch-btn flexrow" title="${game.i18n.localize("WHEEL.Control.Title")}">
-            <i class="fas fa-dharmachakra"></i>
-            <span>${game.i18n.localize("WHEEL.Control.Title")}</span>
-        </button>
-    `);
-
-    button.on("click", (e) => {
-        e.preventDefault();
-        // Since API structure is exposed:
-        game.modules.get("ninjos-player-wheel").api.openControl();
-    });
-
-    // Append to the bottom of the Player List box
-    html.append(button);
+    // V12 backward compatibility: controls is an Array
+    if (Array.isArray(controls)) {
+        let tokenGroup = controls.find(c => c.name === "token" || c.name === "tokens");
+        if (tokenGroup && Array.isArray(tokenGroup.tools)) {
+            tokenGroup.tools.push({
+                name: "player-wheel",
+                title: "WHEEL.Control.Title",
+                icon: "fas fa-dharmachakra",
+                button: true,
+                visible: true,
+                onClick: () => {
+                    const windowExists = Object.values(ui.windows).some(w => w.id === "ninjos-player-wheel-control");
+                    if (windowExists) return;
+                    game.modules.get("ninjos-player-wheel").api.openControl();
+                }
+            });
+        }
+    }
+    // V13+ compatibility according to official documentation API
+    else {
+        // Fallback to controls.token if controls.tokens is undefined (some modules mess with this)
+        let tokenGroup = controls.tokens || controls.token;
+        if (tokenGroup && tokenGroup.tools) {
+            tokenGroup.tools.playerWheel = {
+                name: "playerWheel", // V13 prefers camelCase for the key/name mapping
+                title: "WHEEL.Control.Title",
+                icon: "fas fa-dharmachakra",
+                order: Object.keys(tokenGroup.tools).length,
+                button: true,
+                visible: true,
+                onChange: () => {
+                    const windowExists = Object.values(ui.windows).some(w => w.id === "ninjos-player-wheel-control");
+                    if (windowExists) return;
+                    game.modules.get("ninjos-player-wheel").api.openControl();
+                }
+            };
+        }
+    }
 });

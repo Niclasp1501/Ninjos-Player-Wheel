@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.9] - Foundry V13 Scene Control Button Support
+- **Major Fix:** Fully resolved compatibility issues with Foundry V13's Token Controls sidebar. The Player Wheel (☸️) tool now flawlessly injects as an action button, conforming to V13's strict `onChange` ApplicationV2 event expectations and Object-based control arrays.
+- Removed deprecated array-push injection patterns for V13 to prevent missing buttons and click failures.
+
+## [1.0.8] - Foundry V13 Tool Execution Fix
+- Fixed an issue in Foundry V13 where the Token Control tool button was visible but failed to execute its action. Included strict `onClick` assignment to `controls.token.tools` array to abide by V13 strict object property rules.
+
+## [1.0.7] - Foundry V13 Syntax Fix Complete
+- Fully implemented the explicit V13 syntax for custom Scene Control tools. The `.tools` property in V13 is now a keyed object, not an array. The button now injects flawlessly into the left Token bar.
+
+## [1.0.6] - Foundry V13 Compatibility Fix
+- Fixed a breaking change introduced in Foundry V13 where the `getSceneControlButtons` hook provides an object map instead of an array.
+- Fixed the button injection targeting the V13 renamed `tokens` group (formerly `token`). The tool icon now correctly appears in the left sidebar on V13.
+
+## [1.0.5] - Dedicated Tool Icon / UI Relocation
+- Due to UI collisions in the Foundry Player List, the launch button has been relocated to its native, intended spot: The **Token Controls** toolbar (left side of the screen). Look for the ☸️ icon!
+- Cleaned up the injected CSS that is no longer needed.
+
 ## [1.0.4] - Launch Button & Documentation Fixes
 - Implemented a convenient new "☸️ Player Selection" button directly at the bottom of the Foundry Player List box (bottom left of the screen) for Game Masters to quickly launch the wheel.
 - Completely scrubbed and corrected `README.md`, removing false information about non-existent module buttons and clarifying the exact hotkeys (`Shift + W`) and UI locations to launch the tool.
