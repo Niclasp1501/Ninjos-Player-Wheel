@@ -1,0 +1,19 @@
+{
+    "RECAP.Title": "DnD Recap Wheel",
+    "RECAP.ConfigTitle": "Recap Wheel Configuration",
+    "RECAP.Config.AddPlayer": "Add Player",
+    "RECAP.Config.ResetStatus": "Reset All 'Done'",
+    "RECAP.Config.PlayerList": "Player List",
+    "RECAP.Config.NoPlayers": "No players added yet.",
+    "RECAP.Config.SaveChanges": "Save Changes",
+    "RECAP.Control.Title": "Recap Selection",
+    "RECAP.Control.Description": "Add players and let the wheel spin for everyone!",
+    "RECAP.Control.ConnectedPlayers": "Connected Players",
+    "RECAP.Control.NoConnected": "No other users connected.",
+    "RECAP.Control.Candidates": "Candidates",
+    "RECAP.Control.NoCandidates": "No eligible players available (or all have done recap).",
+    "RECAP.Control.SpinButton": "SPIN THE WHEEL!",
+    "RECAP.Control.SpinTool": "Spin Recap Wheel",
+    "RECAP.Wheel.Winner": "{name} was selected!",
+    "RECAP.Wheel.WinnerSelected": "{name} selected for Recap!"
+}

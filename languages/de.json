@@ -1,0 +1,22 @@
+{
+    "RECAP.Title": "DnD Rückblick-Rad",
+    "RECAP.ConfigTitle": "Rückblick-Rad Einstellungen",
+    "RECAP.Config.AddPlayer": "Spieler hinzufügen",
+    "RECAP.Config.ResetStatus": "Status zurücksetzen",
+    "RECAP.Config.PlayerList": "Spielerliste",
+    "RECAP.Config.NoPlayers": "Noch keine Spieler hinzugefügt.",
+    "RECAP.Config.SaveChanges": "Änderungen speichern",
+    "RECAP.Control.Title": "Rückblick Auswahl",
+    "RECAP.Control.Description": "Füge Spieler hinzu und lass das Rad für alle drehen!",
+    "RECAP.Control.ConnectedPlayers": "Verbundene Spieler",
+    "RECAP.Control.NoConnected": "Keine anderen User verbunden.",
+    "RECAP.Control.Candidates": "Kandidaten",
+    "RECAP.Control.NoCandidates": "Keine Kandidaten verfügbar (oder alle waren schon dran).",
+    "RECAP.Control.SpinButton": "AM RAD DREHEN!",
+    "RECAP.Control.SpinTool": "Rückblick-Rad drehen",
+    "RECAP.Control.AddPlayer": "Neuen Spieler hinzufügen",
+    "RECAP.Control.Remove": "Entfernen",
+    "RECAP.Control.Toggle": "Aktivieren/Deaktivieren",
+    "RECAP.Wheel.Winner": "{name} wurde ausgewählt!",
+    "RECAP.Wheel.WinnerSelected": "{name} für den Rückblick ausgewählt!"
+}

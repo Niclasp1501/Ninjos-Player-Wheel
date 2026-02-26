@@ -1,0 +1,40 @@
+<form autocomplete="off">
+    <header class="config-header">
+        <h1><i class="fas fa-dice-d20"></i> Recap Wheel Configuration</h1>
+        <p>Manage the list of players for the wheel selection.</p>
+    </header>
+
+    <div class="form-group">
+        <label>Player List</label>
+        <div class="player-controls">
+            <button class="add-player"><i class="fas fa-plus"></i> Add Player</button>
+            <button class="reset-status"><i class="fas fa-undo"></i> Reset All "Done"</button>
+        </div>
+    </div>
+
+    <ul class="player-list">
+        {{#each players as |player i|}}
+        <li class="player-row" data-index="{{i}}">
+            <div class="form-fields">
+                <input type="text" name="players.{{i}}.name" value="{{player.name}}" placeholder="Player Name" />
+                <input type="color" name="players.{{i}}.color" value="{{player.color}}" />
+                <label class="checkbox">
+                    <input type="checkbox" name="players.{{i}}.active" {{checked player.active}} /> Active
+                </label>
+                <label class="checkbox" title="Has done recap recently?">
+                    <input type="checkbox" name="players.{{i}}.hasDoneRecap" {{checked player.hasDoneRecap}} /> Done?
+                </label>
+                <button type="button" class="remove-player" data-index="{{i}}"><i class="fas fa-trash"></i></button>
+            </div>
+        </li>
+        {{else}}
+        <li class="empty">No players added yet.</li>
+        {{/each}}
+    </ul>
+
+    <footer class="sheet-footer">
+        <button type="submit" name="submit">
+            <i class="far fa-save"></i> Save Changes
+        </button>
+    </footer>
+</form>

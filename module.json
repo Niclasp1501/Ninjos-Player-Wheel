@@ -1,0 +1,38 @@
+{
+  "id": "ninjos-player-wheel",
+  "title": "Ninjo's Player Wheel",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Ninjo"
+    }
+  ],
+  "license": "LICENSE",
+  "description": "A spinning wheel module to select a player for the next session recap.",
+  "esmodules": [
+    "scripts/module.js"
+  ],
+  "styles": [
+    "styles/module.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "languages/de.json"
+    }
+  ],
+  "socket": true,
+  "url": "https://github.com/Niclasp1501/Ninjos-Player-Wheel",
+  "manifest": "https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/latest/download/module.json",
+  "download": "https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/latest/download/module.zip"
+}

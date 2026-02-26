@@ -1,0 +1,24 @@
+<div class="wheel-window common-display">
+    <div class="wheel-container">
+        <!-- Pointer at the TOP (pointing down) -->
+        <div class="wheel-pointer"></div>
+
+        <div class="wheel-outer">
+            <svg class="wheel-svg" viewBox="0 0 600 600" width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+                <g class="wheel-inner">
+                    <!-- Segments -->
+                    {{#each segments}}
+                    <path d="{{this.d}}" fill="{{this.color}}" stroke="#4b1d16" stroke-width="2" />
+                    <text transform="{{this.textTransform}}" fill="{{this.textColor}}" font-size="24"
+                        font-family="'Modesto Condensed', serif" font-weight="bold" text-anchor="middle"
+                        dominant-baseline="middle">
+                        {{this.name}}
+                    </text>
+                    {{/each}}
+                </g>
+                <!-- Center Hub -->
+                <circle cx="300" cy="300" r="20" fill="#4b1d16" stroke="#c2a674" stroke-width="4" />
+            </svg>
+        </div>
+    </div>
+</div>
