@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.3] - Instant Single Player Celebration
+- Enhanced the single-player spin experience: If only one valid player remains on the wheel, the large wheel graphic will now stay hidden, instantly transitioning into the grand confetti and overlay celebration.
+
 ## [1.0.2] - Action & Core Settings Hotfix
 - Fixed an issue where GitHub Actions was attempting to publish to the Foundry Package Registry with a missing token, causing the release pipeline to fail.
 - Added new "Auto-Close Control Window" Module Setting (enabled by default) to automatically dismiss the GM's player list immediately after spinning the wheel.

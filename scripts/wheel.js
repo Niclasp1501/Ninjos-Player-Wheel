@@ -130,27 +130,7 @@ export class WheelDisplay extends Application {
 
         if (isInstant) {
             // INSTANT REVEAL (Single Player)
-            wheelGroup.style.transition = "none";
-            wheelGroup.style.transformOrigin = "300px 300px";
-            // Set directly to target angle (without the 5 extra spins)
-            const simpleRotation = (360 - winnerAngle) + 270;
-            wheelGroup.style.transform = `rotate(${simpleRotation}deg)`;
-        } else {
-            // LONG SPIN (Suspense)
-            // Heavy Ease-Out: starts fast, decelerrrrrates loooong
-            wheelGroup.style.transition = `transform ${duration}ms cubic-bezier(0.12, 0, 0, 1)`;
-            wheelGroup.style.transformOrigin = "300px 300px";
-            wheelGroup.style.transform = `rotate(${rotationNeeded}deg)`;
-        }
-
-        // Finish / Reveal
-        setTimeout(() => {
-            // Highlight Winner
-            const textElements = html.find("text");
-            if (textElements[winnerIndex]) {
-                const winnerText = textElements[winnerIndex];
-                winnerText.classList.add("winner-text");
-            }
+            html.find(".wheel-container").hide();
 
             // Confetti!
             if (window.confetti) {
@@ -164,20 +144,63 @@ export class WheelDisplay extends Application {
 
             // WINNER REVEAL OVERLAY
             const winnerName = this.winner.name;
-            const overlay = $(`<div class="winner-overlay">
-                <div class="winner-label">Auswahl:</div>
-                <div class="winner-name">${winnerName}</div>
+            const overlay = $(`<div class="winner-overlay" style="background: rgba(0, 0, 0, 0.4); border: none; box-shadow: none;">
+                <div class="winner-label" style="text-shadow: 0 4px 8px black; font-size: 2.5em;">Auswahl:</div>
+                <div class="winner-name" style="text-shadow: 0 6px 12px black, 0 0 20px #daa520; font-size: 5em;">${winnerName}</div>
             </div>`);
             html.append(overlay);
 
             // Animate in
-            setTimeout(() => overlay.addClass("visible"), 100);
+            setTimeout(() => overlay.addClass("visible"), 50);
 
-            // Close after a delay (enough time to celebrate)
+            // Close after a delay
             setTimeout(() => {
                 this.close();
-            }, 6000);
+            }, duration + 5000); // Wait 6 seconds total
 
-        }, duration);
+        } else {
+            // LONG SPIN (Suspense)
+            // Heavy Ease-Out: starts fast, decelerrrrrates loooong
+            wheelGroup.style.transition = `transform ${duration}ms cubic-bezier(0.12, 0, 0, 1)`;
+            wheelGroup.style.transformOrigin = "300px 300px";
+            wheelGroup.style.transform = `rotate(${rotationNeeded}deg)`;
+
+            // Finish / Reveal
+            setTimeout(() => {
+                // Highlight Winner
+                const textElements = html.find("text");
+                if (textElements[winnerIndex]) {
+                    const winnerText = textElements[winnerIndex];
+                    winnerText.classList.add("winner-text");
+                }
+
+                // Confetti!
+                if (window.confetti) {
+                    window.confetti({
+                        particleCount: 250,
+                        spread: 100,
+                        origin: { y: 0.6 },
+                        zIndex: 2147483647
+                    });
+                }
+
+                // WINNER REVEAL OVERLAY
+                const winnerName = this.winner.name;
+                const overlay = $(`<div class="winner-overlay">
+                    <div class="winner-label">Auswahl:</div>
+                    <div class="winner-name">${winnerName}</div>
+                </div>`);
+                html.append(overlay);
+
+                // Animate in
+                setTimeout(() => overlay.addClass("visible"), 100);
+
+                // Close after a delay (enough time to celebrate)
+                setTimeout(() => {
+                    this.close();
+                }, 6000);
+
+            }, duration);
+        }
     }
 }
