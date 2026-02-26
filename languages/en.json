@@ -11,6 +11,8 @@
     "WHEEL.Config.Active": "Active",
     "WHEEL.Config.WasSelected": "Was selected recently?",
     "WHEEL.Config.Done": "Done",
+    "WHEEL.Settings.AutoCloseControl.Name": "Auto-Close Control Window",
+    "WHEEL.Settings.AutoCloseControl.Hint": "Automatically closes the player selection window when you spin the wheel.",
     "WHEEL.Control.Title": "Player Selection",
     "WHEEL.Control.Description": "Add players and let the wheel spin for everyone!",
     "WHEEL.Control.ConnectedPlayers": "Connected Players",

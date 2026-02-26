@@ -150,6 +150,11 @@ export class WheelControl extends FormApplication {
         // Also show for GM
         import("./wheel.js").then(m => m.WheelDisplay.show(spinData));
 
+        // Auto Close Window
+        if (game.settings.get("ninjos-player-wheel", "autoCloseControl")) {
+            this.close();
+        }
+
         // DELAYED RESULT (Synchronized with Wheel Animation)
         setTimeout(async () => {
             // Update winner status

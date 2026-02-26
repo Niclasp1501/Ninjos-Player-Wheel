@@ -17,7 +17,17 @@ try {
             default: []
         });
 
-        // 2. Register Menu (Appears in Configure Settings -> Module Settings)
+        // 2. Register Client Setting (Auto Close Control)
+        game.settings.register("ninjos-player-wheel", "autoCloseControl", {
+            name: "WHEEL.Settings.AutoCloseControl.Name",
+            hint: "WHEEL.Settings.AutoCloseControl.Hint",
+            scope: "client",
+            config: true,
+            type: Boolean,
+            default: true
+        });
+
+        // 3. Register Menu (Appears in Configure Settings -> Module Settings)
         game.settings.registerMenu("ninjos-player-wheel", "config", {
             name: "Recap Wheel Config",
             label: "Manage Wheel Players",

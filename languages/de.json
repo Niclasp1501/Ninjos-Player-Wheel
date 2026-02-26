@@ -11,6 +11,8 @@
     "WHEEL.Config.Active": "Aktiv",
     "WHEEL.Config.WasSelected": "Wurde kürzlich ausgewählt?",
     "WHEEL.Config.Done": "Fertig",
+    "WHEEL.Settings.AutoCloseControl.Name": "Steuerung automatisch schließen",
+    "WHEEL.Settings.AutoCloseControl.Hint": "Schließt das Spieler-Auswahl Fenster automatisch, sobald du das Rad drehst.",
     "WHEEL.Control.Title": "Spieler Auswahl",
     "WHEEL.Control.Description": "Füge Spieler hinzu und lass das Rad für alle drehen!",
     "WHEEL.Control.ConnectedPlayers": "Verbundene Spieler",
