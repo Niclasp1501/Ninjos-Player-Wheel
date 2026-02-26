@@ -84,6 +84,27 @@ Hooks.on("ready", () => {
 
     // Notify GM that module is ready
     if (game.user.isGM) {
-        console.log("Player Wheel | Ready. Press Shift+R to open.");
+        console.log("Player Wheel | Ready. Press Shift+W or click the Player List button to open.");
     }
+});
+
+// 5. Inject Button into Player List (GM Only)
+Hooks.on("renderPlayerList", (app, html, data) => {
+    if (!game.user.isGM) return;
+
+    const button = $(`
+        <button class="ninjos-player-wheel-launch-btn flexrow" title="${game.i18n.localize("WHEEL.Control.Title")}">
+            <i class="fas fa-dharmachakra"></i>
+            <span>${game.i18n.localize("WHEEL.Control.Title")}</span>
+        </button>
+    `);
+
+    button.on("click", (e) => {
+        e.preventDefault();
+        // Since API structure is exposed:
+        game.modules.get("ninjos-player-wheel").api.openControl();
+    });
+
+    // Append to the bottom of the Player List box
+    html.append(button);
 });

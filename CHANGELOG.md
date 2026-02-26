@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.4] - Launch Button & Documentation Fixes
+- Implemented a convenient new "☸️ Player Selection" button directly at the bottom of the Foundry Player List box (bottom left of the screen) for Game Masters to quickly launch the wheel.
+- Completely scrubbed and corrected `README.md`, removing false information about non-existent module buttons and clarifying the exact hotkeys (`Shift + W`) and UI locations to launch the tool.
+
 ## [1.0.3] - Instant Single Player Celebration
 - Enhanced the single-player spin experience: If only one valid player remains on the wheel, the large wheel graphic will now stay hidden, instantly transitioning into the grand confetti and overlay celebration.
 

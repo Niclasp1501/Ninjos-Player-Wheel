@@ -24,10 +24,14 @@ You can install this module by pasting the manifest link in your Foundry VTT **A
 
 ### Usage
 
-1. Open the **Ninjo's Player Wheel** (Dice icon in the Token Controls tool panel).
-2. The UI allows you to quickly **Add (NEW)**, rename, or recolor player entries. 
-3. You can exclude players from the next spin by toggling the eye/check icon, or manually reset the "Done" state for everyone using the **RESET** button.
-4. Once ready, hit **SPIN THE WHEEL!** to randomly select an eligible player.
+There are two easy ways for the Game Master to open the Player Wheel:
+1. **Shortcut:** Press `Shift + W` on your keyboard.
+2. **Player List Button:** Click the new "Player Selection" ☸️ button located at the bottom of the **Player List** box (bottom left of your Foundry screen).
+
+Once the wheel is open:
+- The compact UI allows you to quickly **Add (NEW)**, rename, or recolor player entries. 
+- You can manually exclude players from the next spin by toggling the eye/check icon, or reset the "Done" state for everyone using the **RESET** button.
+- When ready, hit **SPIN THE WHEEL!** to randomly select an eligible player. (Note: Only the GM can start a spin).
 
 ### Module Configuration
 In the core Foundry Settings under *Configure Settings -> Module Settings*, you will find the "Player Wheel Configuration" menu. Here you can set up your default player list across sessions so you don't have to input them every time.
@@ -51,10 +55,14 @@ Du kannst dieses Modul installieren, indem du den Manifest-Link in den Reiter **
 
 ### Nutzung
 
-1. Öffne **Ninjo's Player Wheel** (Würfel-Icon in der Token-Steuerungs-Leiste).
-2. Die kompakte Oberfläche ermöglicht es dir, schnell Spieler hinzuzufügen (**NEU**), umzubenennen oder farblich anzupassen.
-3. Du kannst Spieler für die nächste Drehung ausschließen (Auge/Häkchen-Icon) oder den "Fertig"-Status für alle über die Schaltfläche **RESET** zurücksetzen.
-4. Wenn du bereit bist, klicke auf **AM RAD DREHEN!**, um zufällig einen spielberechtigten Teilnehmer auszuwählen.
+Es gibt zwei einfache Wege für den Spielleiter, das Rad zu öffnen:
+1. **Tastenkombination:** Drücke `Shift + W` auf deiner Tastatur.
+2. **Spielerlisten-Button:** Klicke einfach auf den "Spieler Auswahl" ☸️ Button ganz unten im **Spieler-Fenster** (unten links in Foundry).
+
+Sobald das Rad offen ist:
+- Die kompakte Oberfläche ermöglicht es dir, schnell Spieler hinzuzufügen (**NEU**), umzubenennen oder farblich anzupassen.
+- Du kannst Spieler für die nächste Drehung ausschließen (Auge/Häkchen-Icon) oder den "Fertig"-Status für alle über die Schaltfläche **RESET** zurücksetzen.
+- Wenn du bereit bist, klicke auf **AM RAD DREHEN!**, um zufällig einen spielberechtigten Teilnehmer auszuwählen. (Nur der GM kann drehen).
 
 ### Modul-Konfiguration
 In den Foundry-Grundeinstellungen unter *Einstellungen konfigurieren -> Moduleinstellungen* findest du das Menü "Spieler-Rad Einstellungen". Hier kannst du deine Standard-Spielerliste einmalig anlegen, sodass du sie nicht jedes Mal neu eingeben musst.
