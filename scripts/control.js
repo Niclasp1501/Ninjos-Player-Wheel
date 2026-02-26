@@ -1,6 +1,6 @@
-// RecapControl
+// WheelControl
 
-export class RecapControl extends FormApplication {
+export class WheelControl extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "ninjos-player-wheel-control",
@@ -22,7 +22,7 @@ export class RecapControl extends FormApplication {
         return {
             players: players,
             hasPlayers: players.length > 0,
-            canSpin: players.filter(p => p.active && !p.hasDoneRecap).length >= 1,
+            canSpin: players.filter(p => p.active && !p.wasSelected).length >= 1,
             isGM: game.user.isGM
         };
     }
@@ -81,7 +81,7 @@ export class RecapControl extends FormApplication {
             id: randomID(),
             name: "New Player",
             color: randomColor,
-            hasDoneRecap: false,
+            wasSelected: false,
             active: true
         });
         await game.settings.set("ninjos-player-wheel", "players", players);
@@ -109,7 +109,7 @@ export class RecapControl extends FormApplication {
     async _onResetStatus(event) {
         event.preventDefault();
         const players = game.settings.get("ninjos-player-wheel", "players");
-        players.forEach(p => p.hasDoneRecap = false);
+        players.forEach(p => p.wasSelected = false);
         await game.settings.set("ninjos-player-wheel", "players", players);
         this.render();
     }
@@ -117,10 +117,10 @@ export class RecapControl extends FormApplication {
     async _onSpin(event) {
         event.preventDefault();
         const players = game.settings.get("ninjos-player-wheel", "players");
-        const candidates = players.filter(p => !p.hasDoneRecap && p.active);
+        const candidates = players.filter(p => !p.wasSelected && p.active);
 
         if (candidates.length === 0) {
-            ui.notifications.warn(game.i18n.localize("RECAP.Control.NoCandidates"));
+            ui.notifications.warn(game.i18n.localize("WHEEL.Control.NoCandidates"));
             return;
         }
 
@@ -156,23 +156,23 @@ export class RecapControl extends FormApplication {
             const currentPlayers = game.settings.get("ninjos-player-wheel", "players");
             const originalIndex = currentPlayers.findIndex(p => p.id === winner.id);
             if (originalIndex > -1) {
-                currentPlayers[originalIndex].hasDoneRecap = true;
+                currentPlayers[originalIndex].wasSelected = true;
             }
 
             // Auto-Reset Check
-            const remainingCandidates = currentPlayers.filter(p => !p.hasDoneRecap && p.active);
+            const remainingCandidates = currentPlayers.filter(p => !p.wasSelected && p.active);
             if (remainingCandidates.length === 0) {
-                currentPlayers.forEach(p => p.hasDoneRecap = false);
-                ui.notifications.info(`${game.i18n.localize("RECAP.Config.ResetStatus")} (Auto-Reset)`);
+                currentPlayers.forEach(p => p.wasSelected = false);
+                ui.notifications.info(`${game.i18n.localize("WHEEL.Config.ResetStatus")} (Auto-Reset)`);
             }
 
             // Chat Message Notification
             ChatMessage.create({
                 content: `
                     <div style="text-align: center; font-family: 'Modesto Condensed', serif;">
-                        <h2 style="color: #782e22; border-bottom: 1px solid #782e22; margin-bottom: 5px;">Rückblick: Der Würfel ist gefallen!</h2>
+                        <h2 style="color: #782e22; border-bottom: 1px solid #782e22; margin-bottom: 5px;">Auswahl: Der Würfel ist gefallen!</h2>
                         <div style="font-size: 2em; font-weight: bold; color: #daa520; text-shadow: 1px 1px 0 #000;">${winner.name}</div>
-                        <p style="font-style: italic; color: #4b4a44;">wurde ausgewählt, um den Rückblick zu halten!</p>
+                        <p style="font-style: italic; color: #4b4a44;">wurde durch das Rad bestimmt!</p>
                     </div>
                 `,
                 type: CONST.CHAT_MESSAGE_TYPES.OTHER

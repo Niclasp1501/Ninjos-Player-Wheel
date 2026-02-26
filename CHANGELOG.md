@@ -1,7 +1,7 @@
 # Changelog
 
 ## [1.0.0] - Initial Release
-- Brand new module! Renamed from experimental "recap-wheel" to "Ninjo's Player Wheel".
+- Brand new module! Renamed from experimental "ninjos-player-wheel" to "Ninjo's Player Wheel".
 - Full integration with Foundry VTT settings to track players.
 - Added visual and auditory celebratory feedback when a player is selected.
 - Compatibility with Monk's Common Display for full party viewing.

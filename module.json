@@ -12,7 +12,7 @@
     }
   ],
   "license": "LICENSE",
-  "description": "A spinning wheel module to select a player for the next session recap.",
+  "description": "A spinning wheel module to select a player for the next player.",
   "esmodules": [
     "scripts/module.js"
   ],

@@ -104,7 +104,7 @@ export class WheelDisplay extends Application {
 
         // --- MONK'S COMMON DISPLAY NUKE ---
         if (this.element && this.element[0]) {
-            this.element[0].classList.add("recap-fullscreen-class");
+            this.element[0].classList.add("wheel-fullscreen-class");
             this.element[0].style.setProperty("display", "flex", "important"); /* center contents */
             this.element[0].style.setProperty("visibility", "visible", "important");
             this.element[0].style.setProperty("opacity", "1", "important");
@@ -165,7 +165,7 @@ export class WheelDisplay extends Application {
             // WINNER REVEAL OVERLAY
             const winnerName = this.winner.name;
             const overlay = $(`<div class="winner-overlay">
-                <div class="winner-label">Rückblick:</div>
+                <div class="winner-label">Auswahl:</div>
                 <div class="winner-name">${winnerName}</div>
             </div>`);
             html.append(overlay);

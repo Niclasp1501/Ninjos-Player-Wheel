@@ -1,13 +1,13 @@
-// RecapConfig
+// WheelConfig
 
-export class RecapConfig extends FormApplication {
+export class WheelConfig extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            classes: ["form", "recap-config"],
+            classes: ["form", "wheel-config"],
             template: "modules/ninjos-player-wheel/templates/config.hbs",
             width: 400,
             height: "auto",
-            title: "Recap Wheel Configuration"
+            title: "Player Wheel Configuration"
         });
     }
 
@@ -47,7 +47,7 @@ export class RecapConfig extends FormApplication {
             id: randomID(),
             name: "New Player",
             color: "#ff0000",
-            hasDoneRecap: false,
+            wasSelected: false,
             active: true
         });
         await game.settings.set("ninjos-player-wheel", "players", players);
@@ -66,7 +66,7 @@ export class RecapConfig extends FormApplication {
     async _onResetStatus(event) {
         event.preventDefault();
         const players = game.settings.get("ninjos-player-wheel", "players");
-        players.forEach(p => p.hasDoneRecap = false);
+        players.forEach(p => p.wasSelected = false);
         await game.settings.set("ninjos-player-wheel", "players", players);
         this.render();
     }

@@ -1,6 +1,6 @@
 # Ninjo's Player Wheel
 
-A minimal, aesthetically pleasing spinning wheel module for Foundry VTT. Perfect for deciding who does the recap, selecting random players for effects, or establishing initiative in a fun way!
+A minimal, aesthetically pleasing spinning wheel module for Foundry VTT. Perfect for randomly selecting a player, picking targets for effects, or establishing initiative in a fun way!
 
 ## Features
 - **DnD Aesthetics:** Designed with a parchment-like background and thematic colors that fit right into any dark fantasy or Dungeons & Dragons game.

@@ -1,54 +1,54 @@
-<form class="recap-control-form">
-    <header class="recap-header">
-        <h1>{{localize "RECAP.Control.Title"}}</h1>
-        <p>{{localize "RECAP.Control.Description"}}</p>
+<form class="wheel-control-form">
+    <header class="wheel-header">
+        <h1>{{localize "WHEEL.Control.Title"}}</h1>
+        <p>{{localize "WHEEL.Control.Description"}}</p>
     </header>
 
-    <div class="recap-players-section">
+    <div class="wheel-players-section">
         <div class="player-list-header">
-            <h3>{{localize "RECAP.Config.PlayerList"}}</h3>
+            <h3>{{localize "WHEEL.Config.PlayerList"}}</h3>
             <div class="header-actions">
-                <button type="button" class="player-add" title="{{localize " RECAP.Control.AddPlayer"}}">
+                <button type="button" class="player-add" title="{{localize " WHEEL.Control.AddPlayer"}}">
                     <i class="fas fa-plus"></i>
                 </button>
-                <button type="button" class="player-reset" title="{{localize " RECAP.Config.ResetStatus"}}">
+                <button type="button" class="player-reset" title="{{localize " WHEEL.Config.ResetStatus"}}">
                     <i class="fas fa-sync-alt"></i>
                 </button>
             </div>
         </div>
 
-        <ul class="recap-player-list">
+        <ul class="wheel-player-list">
             {{#if hasPlayers}}
             {{#each players}}
-            <li class="player-item {{#if this.hasDoneRecap}}done{{/if}} {{#unless this.active}}inactive{{/unless}}">
+            <li class="player-item {{#if this.wasSelected}}done{{/if}} {{#unless this.active}}inactive{{/unless}}">
                 <div class="player-info">
                     <span class="player-color-dot" style="background-color: {{this.color}};"></span>
-                    {{#if this.hasDoneRecap}}
+                    {{#if this.wasSelected}}
                     <i class="fas fa-trophy" style="color: #daa520; margin-right: 5px;"
-                        title="{{localize 'RECAP.Control.Winner'}}"></i>
+                        title="{{localize 'WHEEL.Control.Winner'}}"></i>
                     {{/if}}
                     <input type="text" class="player-name-input" data-index="{{@index}}" value="{{this.name}}"
                         title="Click to edit name">
                 </div>
                 <div class="player-actions">
-                    <a class="player-toggle" data-index="{{@index}}" title="{{localize " RECAP.Control.Toggle"}}">
+                    <a class="player-toggle" data-index="{{@index}}" title="{{localize " WHEEL.Control.Toggle"}}">
                         <i class="fas {{#if this.active}}fa-check-circle{{else}}fa-times-circle{{/if}}"></i>
                     </a>
-                    <a class="player-remove" data-index="{{@index}}" title="{{localize " RECAP.Control.Remove"}}">
+                    <a class="player-remove" data-index="{{@index}}" title="{{localize " WHEEL.Control.Remove"}}">
                         <i class="fas fa-trash"></i>
                     </a>
                 </div>
             </li>
             {{/each}}
             {{else}}
-            <li class="no-players">{{localize "RECAP.Config.NoPlayers"}}</li>
+            <li class="no-players">{{localize "WHEEL.Config.NoPlayers"}}</li>
             {{/if}}
         </ul>
     </div>
 
-    <footer class="recap-footer" style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
+    <footer class="wheel-footer" style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
         <button type="button" class="spin-button" {{#if canSpin}}{{else}}disabled{{/if}}>
-            <i class="fas fa-dharmachakra"></i> {{localize "RECAP.Control.SpinButton"}}
+            <i class="fas fa-dharmachakra"></i> {{localize "WHEEL.Control.SpinButton"}}
         </button>
         <button type="button" class="close-wheel-button" title="Rad bei allen schließen" style="background: #5c0002; color: #fff; border: 1px solid #4b1d16; min-width: 45px; display: flex; justify-content: center; align-items: center; cursor: pointer;">
             <i class="fas fa-times"></i>

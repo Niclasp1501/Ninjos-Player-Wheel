@@ -1,11 +1,11 @@
-import { RecapConfig } from "./config.js";
+import { WheelConfig } from "./config.js";
 import { WheelDisplay } from "./wheel.js";
-import { RecapControl } from "./control.js";
+import { WheelControl } from "./control.js";
 import "./confetti.min.js"; // Side-effect import to load into window
 
 try {
     Hooks.once("init", () => {
-        console.log("Recap Wheel | Initializing");
+        console.log("Player Wheel | Initializing");
 
         // 1. Register Settings
         game.settings.register("ninjos-player-wheel", "players", {
@@ -20,23 +20,23 @@ try {
         // 2. Register Menu (Appears in Configure Settings -> Module Settings)
         game.settings.registerMenu("ninjos-player-wheel", "config", {
             name: "Recap Wheel Config",
-            label: "Manage Recap Players",
+            label: "Manage Wheel Players",
             hint: "Add or remove players from the wheel.",
             icon: "fas fa-users-cog",
-            type: RecapConfig,
+            type: WheelConfig,
             restricted: true
         });
 
         // 3. Register Keybinding (Shift + W to avoid Reload accidents)
         game.keybindings.register("ninjos-player-wheel", "openControl", {
-            name: "Open Recap Wheel",
+            name: "Open Player Wheel",
             hint: "Opens the dialog to select players and spin the wheel.",
             editable: [
                 { key: "KeyW", modifiers: ["Shift"] }
             ],
             onDown: () => {
                 if (game.user.isGM) {
-                    new RecapControl().render(true);
+                    new WheelControl().render(true);
                     return true;
                 }
                 return false;
@@ -47,8 +47,8 @@ try {
 
         // 4. Expose API for Macros
         game.modules.get("ninjos-player-wheel").api = {
-            openControl: () => new RecapControl().render(true),
-            openConfig: () => new RecapConfig().render(true),
+            openControl: () => new WheelControl().render(true),
+            openConfig: () => new WheelConfig().render(true),
             spin: (data) => WheelDisplay.show(data)
         };
     });
@@ -56,7 +56,7 @@ try {
     // Remove the old sidebar button logic entirely.
 
 } catch (error) {
-    console.error("Recap Wheel | CRITICAL ERROR:", error);
+    console.error("Player Wheel | CRITICAL ERROR:", error);
 }
 
 Hooks.on("ready", () => {
@@ -74,6 +74,6 @@ Hooks.on("ready", () => {
 
     // Notify GM that module is ready
     if (game.user.isGM) {
-        console.log("Recap Wheel | Ready. Press Shift+R to open.");
+        console.log("Player Wheel | Ready. Press Shift+R to open.");
     }
 });

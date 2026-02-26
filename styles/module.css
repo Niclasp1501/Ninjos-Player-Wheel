@@ -1,11 +1,11 @@
 /* Configuration Dialog */
-.recap-config .form-group {
+.wheel-config .form-group {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
 }
 
-.recap-config .player-list {
+.wheel-config .player-list {
     max-height: 300px;
     overflow-y: auto;
     border: 1px solid #700000;
@@ -14,7 +14,7 @@
     border-radius: 5px;
 }
 
-.recap-config .player-row {
+.wheel-config .player-row {
     display: flex;
     align-items: center;
     padding: 5px;
@@ -23,7 +23,7 @@
     border-radius: 3px;
 }
 
-.recap-config .player-row input {
+.wheel-config .player-row input {
     margin-right: 5px;
 }
 
@@ -41,20 +41,20 @@
 }
 
 /* Control Form */
-.recap-control-form {
+.wheel-control-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.recap-header {
+.wheel-header {
     border-bottom: 2px solid #782e22;
     /* DnD Red */
     padding-bottom: 5px;
     margin-bottom: 5px;
 }
 
-.recap-header h1 {
+.wheel-header h1 {
     border: none;
     font-family: "Modesto Condensed", "Palatino Linotype", serif;
     font-size: 1.5em;
@@ -62,7 +62,7 @@
 }
 
 /* Player List */
-.recap-players-section {
+.wheel-players-section {
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid #c9c7b8;
     border-radius: 5px;
@@ -84,7 +84,7 @@
     font-size: 1.1em;
 }
 
-.recap-player-list {
+.wheel-player-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -221,7 +221,7 @@
     margin: 0 !important;
 }
 
-#ninjos-player-wheel-display.recap-fullscreen-class {
+#ninjos-player-wheel-display.wheel-fullscreen-class {
     /* Nuke Centering */
     position: fixed !important;
     top: 50% !important;
@@ -361,17 +361,17 @@
     color: #1a1a1a !important;
 }
 
-.recap-control-form .recap-header h1 {
+.wheel-control-form .wheel-header h1 {
     color: #782e22;
     text-shadow: none;
 }
 
-.recap-control-form p,
-.recap-control-form label {
+.wheel-control-form p,
+.wheel-control-form label {
     color: #1a1a1a;
 }
 
-.recap-players-section {
+.wheel-players-section {
     background: rgba(255, 255, 255, 0.4);
     border: 1px solid #c9c7b8;
 }
