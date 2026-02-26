@@ -1,7 +1,10 @@
 # Changelog
 
-## [1.0.1] - UI Overhaul & Cleanup
+## [1.0.2] - Action & Core Settings Hotfix
+- Fixed an issue where GitHub Actions was attempting to publish to the Foundry Package Registry with a missing token, causing the release pipeline to fail.
 - Added new "Auto-Close Control Window" Module Setting (enabled by default) to automatically dismiss the GM's player list immediately after spinning the wheel.
+
+## [1.0.1] - UI Overhaul & Cleanup
 - Fully redesigned layout replacing the split-pane with a modern, compact single-column approach matching the D&D 5e Book FANG Theme.
 - Removed unused manual "close window" button since the wheel natively auto-closes across all clients after revealing a winner.
 - Fixed missing localization keys in `de.json` and `en.json` for the configure/control panels.
