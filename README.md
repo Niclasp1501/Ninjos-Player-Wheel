@@ -3,71 +3,82 @@
 ![Foundry Version](https://img.shields.io/badge/Foundry-v13--v14-informational)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-*(Deutsch unten)*
+A lightweight spinning wheel module for Foundry VTT to randomly select players in a clear and fun way.
 
-A lightweight, aesthetically pleasing spinning wheel module for Foundry VTT. Perfect for randomly selecting a player, picking targets for effects, determining loot distribution, or establishing initiative in a fun, suspenseful way!
+## Quick Start
 
----
+1. Install the module via the stable manifest or beta manifest.
+2. Enable the module in your world.
+3. Open the wheel with `Shift + W` as GM.
+4. Or click the wheel icon in the Token Controls bar.
+5. Spin and auto-track selected players.
 
-## 🇬🇧 Features (English)
+## Installation
 
-- **D&D 5e Aesthetics:** Designed with a parchment-like background and strict Red/Gold thematic colors that fit right into any dark fantasy or Dungeons & Dragons game.
-- **Dynamic Spinning:** Automatically adjusts the spin duration and suspense depending on whether multiple players or just one player remains on the wheel.
-- **Monk's Common Display Support:** Forces the wheel display to center perfectly onscreen if the GM decides to cast it to the entire party.
-- **Fair Rotation:** Includes a built-in tracking system where chosen players are marked as "Done", automatically hiding them from future spins until everyone has had a turn.
-- **Auto-Close:** The wheel automatically closes for everyone 6 seconds after a winner is celebrated, keeping your screen clutter-free.
+Stable manifest:
+`https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/latest/download/module.json`
+
+Beta manifest:
+`https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/download/beta-latest/module-beta.json`
+
+## Compatibility Matrix
+
+| Module Version | Foundry Minimum | Foundry Verified | Foundry Maximum |
+| --- | --- | --- | --- |
+| 14.x.x | 13 | 14 | 14 |
+
+## Features
+
+- Dynamic spin timing for suspense.
+- Fair rotation with done-state tracking.
+- Optional auto-close after winner reveal.
+- English and German language packs.
+- Token Controls toolbar integration.
+
+## Troubleshooting
+
+- Wheel button does not appear:
+  - Make sure you are GM.
+  - Open Token Controls once; some UI modules delay injection.
+  - Disable conflicting toolbar/UI modules and retest.
+- `Shift + W` does not open the control:
+  - Check keybinding conflicts in Foundry keybindings.
+- Spin does not show for players:
+  - Ensure socket connection is active and all clients loaded the module.
+- Beta install does not update:
+  - Reinstall using the beta manifest URL above and refresh the browser cache.
+
+## Development
+
+### Beta release workflow
+
+The beta workflow runs on pushes to `beta` (or manual dispatch) and does:
+
+- Version prefix enforcement (`14.x.x`).
+- Manifest structure validation.
+- JSON validation for module and language files.
+- JavaScript syntax checks for `scripts/*.js`.
+- Beta prerelease publishing to `beta-latest` with generated release notes.
+
+## Deutsch (Kurzfassung)
 
 ### Installation
 
-You can install this module by pasting the manifest link in your Foundry VTT **Add-on Modules** tab:
+Stabil:
 `https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/latest/download/module.json`
 
-### Usage
-
-There are two easy ways for the Game Master to open the Player Wheel:
-1. **Shortcut:** Press `Shift + W` on your keyboard.
-2. **Token Controls Bar:** Click the new "Player Selection" ☸️ icon located in the main Token Controls toolbar on the left side of your Foundry screen.
-
-Once the wheel is open:
-- The compact UI allows you to quickly **Add (NEW)**, rename, or recolor player entries. 
-- You can manually exclude players from the next spin by toggling the eye/check icon, or reset the "Done" state for everyone using the **RESET** button.
-- When ready, hit **SPIN THE WHEEL!** to randomly select an eligible player. (Note: Only the GM can start a spin).
-
-### Module Configuration
-In the core Foundry Settings under *Configure Settings -> Module Settings*, you will find the "Player Wheel Configuration" menu. Here you can set up your default player list across sessions so you don't have to input them every time.
-
----
-
-## 🇩🇪 Funktionen (Deutsch)
-
-Ein leichtgewichtiges, ästhetisch ansprechendes Glücksrad-Modul für Foundry VTT. Perfekt, um zufällig einen Spieler auszuwählen, Ziele für Effekte zu bestimmen, Beute zu verteilen oder die Initiative auf eine spaßige, spannende Art festzulegen!
-
-- **D&D 5e Ästhetik:** Entworfen mit einem pergamentartigen Hintergrund und stilvollen Rot/Gold-Akzenten, die perfekt in jedes Dark Fantasy- oder Dungeons & Dragons-Spiel passen.
-- **Dynamisches Drehen:** Passt die Dauer der Drehung und die Spannung automatisch an, je nachdem, ob noch mehrere Spieler oder nur noch einer auf dem Rad sind.
-- **Monk's Common Display Support:** Zwingt das Rad, sich perfekt zentriert auf dem Bildschirm zu öffnen, wenn der Spielleiter es für die gesamte Gruppe einblendet ("Casting").
-- **Faires Durchwechseln:** Beinhaltet ein integriertes Tracking-System! Ausgewählte Spieler werden als "Fertig" (Trophy-Icon) markiert und automatisch für zukünftige Runden ausgeblendet, bis jeder einmal dran war.
-- **Auto-Close:** Das Rad schließt sich für alle Spieler automatisch 6 Sekunden, nachdem ein Gewinner gefeiert wurde, damit der Bildschirm übersichtlich bleibt.
-
-### Installation
-
-Du kannst dieses Modul installieren, indem du den Manifest-Link in den Reiter **Zusatzmodule** in Foundry VTT einfügst:
-`https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/latest/download/module.json`
+Beta:
+`https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/download/beta-latest/module-beta.json`
 
 ### Nutzung
 
-Es gibt zwei einfache Wege für den Spielleiter, das Rad zu öffnen:
-1. **Tastenkombination:** Drücke `Shift + W` auf deiner Tastatur.
-2. **Werkzeugleiste (Token Controls):** Klicke einfach auf das "Spieler Auswahl" ☸️ Icon direkt in der Hauptwerkzeugleiste (Token Controls) auf der linken Seite in Foundry.
+- Als Spielleiter mit `Shift + W` oeffnen.
+- Oder ueber das Rad-Icon in den Token Controls.
 
-Sobald das Rad offen ist:
-- Die kompakte Oberfläche ermöglicht es dir, schnell Spieler hinzuzufügen (**NEU**), umzubenennen oder farblich anzupassen.
-- Du kannst Spieler für die nächste Drehung ausschließen (Auge/Häkchen-Icon) oder den "Fertig"-Status für alle über die Schaltfläche **RESET** zurücksetzen.
-- Wenn du bereit bist, klicke auf **AM RAD DREHEN!**, um zufällig einen spielberechtigten Teilnehmer auszuwählen. (Nur der GM kann drehen).
+### Kompatibilitaet
 
-### Modul-Konfiguration
-In den Foundry-Grundeinstellungen unter *Einstellungen konfigurieren -> Moduleinstellungen* findest du das Menü "Spieler-Rad Einstellungen". Hier kannst du deine Standard-Spielerliste einmalig anlegen, sodass du sie nicht jedes Mal neu eingeben musst.
+- Modul `14.x.x` fuer Foundry `13-14` (verified/max: `14`).
 
----
+## License
 
-## Development & License
-This module is fully open-source under the MIT License. For issues and feature requests, please visit the [GitHub repository](https://github.com/Niclasp1501/Ninjos-Player-Wheel).
+MIT

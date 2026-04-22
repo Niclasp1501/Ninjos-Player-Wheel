@@ -1,5 +1,11 @@
 # Changelog
 
+## [14.0.1-beta] - Beta CI Hardening and Documentation Upgrade
+- Beta workflow now runs only when relevant files change (`module.json`, `scripts`, `styles`, `templates`, `languages`, workflow file).
+- Added stronger CI checks in beta: manifest structure validation, JSON validation, and JavaScript syntax checks.
+- Added generated beta release notes from the latest changelog section.
+- Reworked README with compatibility matrix, beta install path, and troubleshooting guidance.
+
 ## [14.0.0] - Foundry-Versioned Module Semver
 - Switched module versioning to start with `14.x.x` so the highest supported Foundry generation is visible at a glance.
 - Added workflow validation to enforce the `14.x.x` version prefix for stable and beta releases.

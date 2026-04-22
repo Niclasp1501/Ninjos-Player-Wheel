@@ -4,10 +4,21 @@ on:
   push:
     branches:
       - beta
+    paths:
+      - "module.json"
+      - "scripts/**"
+      - "styles/**"
+      - "templates/**"
+      - "languages/**"
+      - ".github/workflows/release-beta.yml"
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: beta-release-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-beta:
@@ -25,6 +36,48 @@ jobs:
             echo "module.json version must start with 14.x.x, got: $version"
             exit 1
           fi
+
+      - name: Validate Manifest Structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e '
+            (.id | type=="string" and length>0) and
+            (.title | type=="string" and length>0) and
+            (.version | type=="string" and length>0) and
+            (.compatibility.minimum | type=="string") and
+            (.compatibility.verified | type=="string") and
+            (.compatibility.maximum | type=="string") and
+            (.manifest | type=="string" and startswith("https://")) and
+            (.download | type=="string" and startswith("https://"))
+          ' module.json >/dev/null
+
+          min="$(jq -r '.compatibility.minimum' module.json)"
+          verified="$(jq -r '.compatibility.verified' module.json)"
+          max="$(jq -r '.compatibility.maximum' module.json)"
+          if [[ "$verified" != "14" || "$max" != "14" ]]; then
+            echo "Expected compatibility.verified and compatibility.maximum to be 14"
+            exit 1
+          fi
+          if (( min > verified )); then
+            echo "compatibility.minimum must be <= compatibility.verified"
+            exit 1
+          fi
+
+      - name: Validate JSON Files
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -e . module.json >/dev/null
+          find languages -name '*.json' -print0 | xargs -0 -n1 jq -e . >/dev/null
+
+      - name: Validate JavaScript Syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find scripts -name '*.js' -print0 | while IFS= read -r -d '' file; do
+            node --check "$file"
+          done
 
       - name: Prepare Beta Manifest
         shell: bash
@@ -53,6 +106,29 @@ jobs:
              | .manifest = $manifestUrl
              | .download = $downloadUrl' \
             module.json > module-beta.json
+
+      - name: Prepare Beta Release Notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(jq -r '.version' module-beta.json)"
+          {
+            echo "# Ninjo's Player Wheel Beta"
+            echo
+            echo "- Channel: \`beta-latest\`"
+            echo "- Version: \`$version\`"
+            echo "- Foundry Compatibility: \`13 - 14\`"
+            echo
+            echo "## Latest Changes"
+            awk '
+              BEGIN{found=0}
+              /^## \[/{
+                if(found==1){exit}
+                if(found==0){found=1; print; next}
+              }
+              found==1{print}
+            ' CHANGELOG.md
+          } > beta-release-notes.md
 
       - name: Build Beta Archive
         shell: bash
@@ -99,5 +175,6 @@ jobs:
           files: |
             module-beta.json
             module-beta.zip
+          body_path: beta-release-notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
