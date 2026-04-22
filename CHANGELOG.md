@@ -1,5 +1,9 @@
 # Changelog
 
+## [14.0.0] - Foundry-Versioned Module Semver
+- Switched module versioning to start with `14.x.x` so the highest supported Foundry generation is visible at a glance.
+- Added workflow validation to enforce the `14.x.x` version prefix for stable and beta releases.
+
 ## [1.1.0] - Foundry V14 Compatibility and Beta Channel
 - Set module compatibility range to Foundry VTT 13-14 (`minimum: 13`, `verified: 14`, `maximum: 14`).
 - Added a beta release workflow (`.github/workflows/release-beta.yml`) modeled after FANG.
