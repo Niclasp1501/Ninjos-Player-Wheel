@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.0] - Foundry V14 Compatibility and Beta Channel
+- Set module compatibility range to Foundry VTT 13-14 (`minimum: 13`, `verified: 14`, `maximum: 14`).
+- Added a beta release workflow (`.github/workflows/release-beta.yml`) modeled after FANG.
+- Updated the stable release workflow name/details for clear FVTT 13-14 targeting.
+
 ## [1.0.10] - Standardized Foundry Compatibility Metadata
 - Updated module.json to include the typical Foundry compatibility range fields: minimum, verified, and maximum.
 - This makes the supported Foundry generation explicit in release metadata and easier to read at a glance.

@@ -1,6 +1,6 @@
 # Ninjo's Player Wheel
 
-![Foundry Version](https://img.shields.io/badge/Foundry-v11+-informational)
+![Foundry Version](https://img.shields.io/badge/Foundry-v13--v14-informational)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 *(Deutsch unten)*
