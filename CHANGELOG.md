@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.10] - Standardized Foundry Compatibility Metadata
+- Updated module.json to include the typical Foundry compatibility range fields: minimum, verified, and maximum.
+- This makes the supported Foundry generation explicit in release metadata and easier to read at a glance.
+
 ## [1.0.9] - Foundry V13 Scene Control Button Support
 - **Major Fix:** Fully resolved compatibility issues with Foundry V13's Token Controls sidebar. The Player Wheel (☸️) tool now flawlessly injects as an action button, conforming to V13's strict `onChange` ApplicationV2 event expectations and Object-based control arrays.
 - Removed deprecated array-push injection patterns for V13 to prevent missing buttons and click failures.
@@ -41,3 +45,5 @@
 - Compatibility with Monk's Common Display for full party viewing.
 - Implemented auto-reset behavior when all players have spun the wheel.
 - German and English localization.
+
+

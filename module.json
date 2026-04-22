@@ -1,10 +1,11 @@
 {
   "id": "ninjos-player-wheel",
   "title": "Ninjo's Player Wheel",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "compatibility": {
     "minimum": "13",
-    "verified": "13"
+    "verified": "13",
+    "maximum": "13"
   },
   "authors": [
     {
