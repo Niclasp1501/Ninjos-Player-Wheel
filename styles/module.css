@@ -1,27 +1,27 @@
 /* --- Global Theme Variables --- */
 :root {
     /* D&D Reference Design - Strict Red/Gold Theme */
-    --ninjos-player-wheel-bg-color: #fdfbf7;
+    --ninjos-player-wheel-bg-color: var(--ninjo-grund);
     /* Parchment Light */
-    --ninjos-player-wheel-text-color: #1a1a1a;
+    --ninjos-player-wheel-text-color: var(--ninjo-text);
     /* Almost black for readability */
     --ninjos-player-wheel-card-bg: #ffffff;
     /* Pure white for inner cards/inputs */
-    --ninjos-player-wheel-nav-bg: #f4f1ea;
+    --ninjos-player-wheel-nav-bg: var(--ninjo-leiste);
     /* Slightly darker parchment for sidebars */
-    --ninjos-player-wheel-border-color: #dcd6cc;
+    --ninjos-player-wheel-border-color: var(--ninjo-rand);
     /* Soft beige border */
 
     /* Strict Theme Colors */
-    --ninjos-player-wheel-primary-red: #8B0000;
+    --ninjos-player-wheel-primary-red: var(--ninjo-marke);
     /* Dark D&D Red for Headers/Buttons */
-    --ninjos-player-wheel-accent-gold: #D4AF37;
+    --ninjos-player-wheel-accent-gold: var(--ninjo-akzent);
     /* Metallic Gold for Borders/Highlights */
     --ninjos-player-wheel-header-text: #ffffff;
     /* White text on red backgrounds */
     --ninjos-player-wheel-canvas-bg: #fbf9f4;
     /* Main content area background */
-    --ninjos-player-wheel-font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --ninjos-player-wheel-font-main: var(--ninjo-schrift);
 
     --ninjos-player-wheel-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
     --ninjos-player-wheel-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);

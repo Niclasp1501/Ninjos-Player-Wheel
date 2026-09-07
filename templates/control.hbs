@@ -12,19 +12,19 @@
                 <h3>{{localize "WHEEL.Config.PlayerList"}}</h3>
                 <div class="header-actions">
                     <button type="button" class="player-add" title="{{localize " WHEEL.Control.AddPlayer"}}">
-                        <i class="fas fa-plus"></i> <span
+                        <i class="fas fa-plus" aria-hidden="true"></i> <span
                             style="font-weight: 600; font-size: 0.9em; margin-left: 2px;">{{localize
                             "WHEEL.Control.AddUI"}}</span>
                     </button>
                     <button type="button" class="player-reset" title="{{localize " WHEEL.Config.ResetStatus"}}">
-                        <i class="fas fa-sync-alt"></i> <span
+                        <i class="fas fa-sync-alt" aria-hidden="true"></i> <span
                             style="font-weight: 600; font-size: 0.9em; margin-left: 2px;">{{localize
                             "WHEEL.Control.ResetUI"}}</span>
                     </button>
                 </div>
             </div>
 
-            <ul class="wheel-player-list">
+            <ul class="wheel-player-list" role="list">
                 {{#if hasPlayers}}
                 {{#each players}}
                 <li class="player-item {{#if this.wasSelected}}done{{/if}} {{#unless this.active}}inactive{{/unless}}">
@@ -32,18 +32,24 @@
                         <span class="player-color-dot" style="background-color: {{this.color}};"></span>
                         {{#if this.wasSelected}}
                         <i class="fas fa-trophy" style="color: #daa520; margin-right: 5px;"
-                            title="{{localize 'WHEEL.Control.Winner'}}"></i>
+                            title="{{localize 'WHEEL.Control.Winner'}}" aria-hidden="true"></i>
                         {{/if}}
                         <input type="text" class="player-name-input" data-index="{{@index}}" value="{{this.name}}"
-                            title="Click to edit name">
+                            aria-label="{{localize 'WHEEL.Control.EditName'}}"
+                            title="{{localize 'WHEEL.Control.EditName'}}">
                     </div>
                     <div class="player-actions">
-                        <a class="player-toggle" data-index="{{@index}}" title="{{localize " WHEEL.Control.Toggle"}}">
-                            <i class="fas {{#if this.active}}fa-check-circle{{else}}fa-times-circle{{/if}}"></i>
-                        </a>
-                        <a class="player-remove" data-index="{{@index}}" title="{{localize " WHEEL.Control.Remove"}}">
-                            <i class="fas fa-trash"></i>
-                        </a>
+                        <button type="button" class="player-toggle" data-index="{{@index}}"
+                            title="{{localize 'WHEEL.Control.Toggle'}}"
+                            aria-label="{{localize 'WHEEL.Control.Toggle'}}"
+                            aria-pressed="{{#if this.active}}true{{else}}false{{/if}}">
+                            <i class="fas {{#if this.active}}fa-check-circle{{else}}fa-times-circle{{/if}}" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="player-remove" data-index="{{@index}}"
+                            title="{{localize 'WHEEL.Control.Remove'}}"
+                            aria-label="{{localize 'WHEEL.Control.Remove'}}">
+                            <i class="fas fa-trash" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </li>
                 {{/each}}
@@ -57,7 +63,7 @@
         <!-- Footer / Spin Action -->
         <div class="sidebar-footer spin-actions-container" style="text-align: center;">
             <button type="button" class="spin-button" {{#if canSpin}}{{else}}disabled{{/if}}>
-                <i class="fas fa-dharmachakra" style="font-size: 1.2em;"></i> {{localize "WHEEL.Control.SpinButton"}}
+                <i class="fas fa-dharmachakra" style="font-size: 1.2em;" aria-hidden="true"></i> {{localize "WHEEL.Control.SpinButton"}}
             </button>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <form autocomplete="off" class="ninjos-player-wheel-container" style="display: block; padding: 10px;">
     <!-- Simple overrides for the config dialog to reuse the global theme classes where possible -->
     <header class="sidebar-header" style="margin: -15px -15px 15px -15px; border-radius: 4px 4px 0 0;">
-        <h1><i class="fas fa-dice-d20"></i> {{localize "WHEEL.ConfigTitle"}}</h1>
+        <h1><i class="fas fa-dice-d20" aria-hidden="true"></i> {{localize "WHEEL.ConfigTitle"}}</h1>
         <p>{{localize "WHEEL.Config.Description"}}</p>
     </header>
 
@@ -10,9 +10,9 @@
         <label style="margin: 0; font-size: 1.1rem; color: var(--ninjos-player-wheel-primary-red);">{{localize
             "WHEEL.Config.Presets"}}</label>
         <div class="header-actions">
-            <button type="button" class="add-player" style="padding: 5px 10px;"><i class="fas fa-plus"></i> {{localize
+            <button type="button" class="add-player" style="padding: 5px 10px;"><i class="fas fa-plus" aria-hidden="true"></i> {{localize
                 "WHEEL.Config.AddPlayer"}}</button>
-            <button type="button" class="reset-status" style="padding: 5px 10px;"><i class="fas fa-undo"></i> {{localize
+            <button type="button" class="reset-status" style="padding: 5px 10px;"><i class="fas fa-undo" aria-hidden="true"></i> {{localize
                 "WHEEL.Config.ResetStatus"}}</button>
         </div>
     </div>
@@ -21,7 +21,8 @@
         style="max-height: 400px; overflow-y: auto; padding: 5px; border: 1px solid var(--ninjos-player-wheel-border-color); background: var(--ninjos-player-wheel-bg-color); border-radius: 4px; margin-bottom: 15px;">
         {{#each players as |player i|}}
         <li class="player-item" data-index="{{i}}" style="display: flex; gap: 10px; align-items: center;">
-            <input type="text" name="players.{{i}}.name" value="{{player.name}}" placeholder="Player Name"
+            <input type="text" name="players.{{i}}.name" value="{{player.name}}" placeholder="{{localize 'WHEEL.Config.NamePlaceholder'}}"
+                aria-label="{{localize 'WHEEL.Config.NamePlaceholder'}}"
                 style="flex: 1;" />
             <input type="color" name="players.{{i}}.color" value="{{player.color}}"
                 style="width: 40px; height: 35px; cursor: pointer; border: 1px solid var(--ninjos-player-wheel-border-color); border-radius: 4px;" />
@@ -35,7 +36,9 @@
                 "WHEEL.Config.Done"}}
             </label>
             <div class="player-actions" style="margin-left: auto;">
-                <a class="remove-player" data-index="{{i}}" style="font-size: 1.2rem;"><i class="fas fa-trash"></i></a>
+                <button type="button" class="remove-player" data-index="{{i}}"
+                    title="{{localize 'WHEEL.Control.Remove'}}"
+                    aria-label="{{localize 'WHEEL.Control.Remove'}}"><i class="fas fa-trash" aria-hidden="true"></i></button>
             </div>
         </li>
         {{else}}
@@ -46,7 +49,7 @@
 
     <footer class="sheet-footer" style="display: flex; justify-content: flex-end;">
         <button type="submit" name="submit" style="font-size: 1.1rem; padding: 10px 20px;">
-            <i class="far fa-save"></i> {{localize "WHEEL.Config.SaveChanges"}}
+            <i class="far fa-save" aria-hidden="true"></i> {{localize "WHEEL.Config.SaveChanges"}}
         </button>
     </footer>
 </form>

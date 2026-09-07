@@ -2,6 +2,8 @@ import { WheelConfig } from "./config.js";
 import { WheelDisplay } from "./wheel.js";
 import { WheelControl } from "./control.js";
 import "./confetti.min.js"; // Side-effect import to load into window
+import { willkommenEinrichten, willkommenZeigen } from "./willkommen.js";
+import { fensterPassenEinrichten } from "./fensterpassen.js";
 
 try {
     Hooks.once("init", () => {
@@ -9,8 +11,8 @@ try {
 
         // 1. Register Settings
         game.settings.register("ninjos-player-wheel", "players", {
-            name: "Players List",
-            hint: "List of players for the wheel.",
+            name: "WHEEL.Settings.Players.Name",
+            hint: "WHEEL.Settings.Players.Hint",
             scope: "world",
             config: false,
             type: Object,
@@ -29,9 +31,9 @@ try {
 
         // 3. Register Menu (Appears in Configure Settings -> Module Settings)
         game.settings.registerMenu("ninjos-player-wheel", "config", {
-            name: "Recap Wheel Config",
-            label: "Manage Wheel Players",
-            hint: "Add or remove players from the wheel.",
+            name: "WHEEL.Settings.Config.Name",
+            label: "WHEEL.Settings.Config.Label",
+            hint: "WHEEL.Settings.Config.Hint",
             icon: "fas fa-users-cog",
             type: WheelConfig,
             restricted: true
@@ -39,8 +41,8 @@ try {
 
         // 3. Register Keybinding (Shift + W to avoid Reload accidents)
         game.keybindings.register("ninjos-player-wheel", "openControl", {
-            name: "Open Player Wheel",
-            hint: "Opens the dialog to select players and spin the wheel.",
+            name: "WHEEL.Keybinding.Open.Name",
+            hint: "WHEEL.Keybinding.Open.Hint",
             editable: [
                 { key: "KeyW", modifiers: ["Shift"] }
             ],
@@ -88,6 +90,9 @@ Hooks.on("ready", () => {
     }
 });
 
+Hooks.once("init", () => willkommenEinrichten());
+Hooks.once("ready", () => willkommenZeigen());
+
 // 5. Inject Button into Scene Controls (Token Bar)
 Hooks.on('getSceneControlButtons', (controls) => {
     // Only show to GMs
@@ -132,3 +137,5 @@ Hooks.on('getSceneControlButtons', (controls) => {
         }
     }
 });
+
+Hooks.once("ready", () => fensterPassenEinrichten());

@@ -18,6 +18,7 @@
     "scripts/module.js"
   ],
   "styles": [
+    "styles/ninjo-marke.css",
     "styles/module.css"
   ],
   "languages": [

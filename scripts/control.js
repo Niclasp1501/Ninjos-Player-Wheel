@@ -79,7 +79,7 @@ export class WheelControl extends FormApplication {
 
         players.push({
             id: randomID(),
-            name: "New Player",
+            name: game.i18n.localize("WHEEL.Config.NewPlayer"),
             color: randomColor,
             wasSelected: false,
             active: true
@@ -92,9 +92,32 @@ export class WheelControl extends FormApplication {
         event.preventDefault();
         const index = event.currentTarget.dataset.index;
         const players = game.settings.get("ninjos-player-wheel", "players");
+        if (!await this._frageEntfernen(players[index]?.name ?? "")) return;
         players.splice(index, 1);
         await game.settings.set("ninjos-player-wheel", "players", players);
         this.render();
+    }
+
+    /**
+     * Wirklich entfernen?
+     *
+     * Ein Spieler war mit einem Tipp aus der Liste, und es gibt kein
+     * Rueckgaengig - die Liste ist eine Welteinstellung, keine
+     * Dokumenthistorie. Also fragen wir.
+     *
+     * `DialogV2` und nicht der alte Dialog: Dass die Fenster dieses Moduls
+     * noch auf `FormApplication` stehen, zwingt nicht dazu, auch die
+     * Nachfragen alt zu bauen - und es ist derselbe Dialog wie in den
+     * uebrigen Ninjo-Modulen. Wegklicken und Escape zaehlen als Nein.
+     */
+    async _frageEntfernen(name) {
+        return foundry.applications.api.DialogV2.confirm({
+            window: { title: game.i18n.localize("WHEEL.Confirm.RemoveTitle") },
+            content: `<p>${game.i18n.format("WHEEL.Confirm.RemoveBody", { name })}</p>`,
+            yes: { label: game.i18n.localize("WHEEL.Confirm.RemoveYes") },
+            no: { label: game.i18n.localize("WHEEL.Confirm.Cancel"), default: true },
+            rejectClose: false
+        });
     }
 
     async _onTogglePlayer(event) {
@@ -198,6 +221,6 @@ export class WheelControl extends FormApplication {
         // Also close for GM
         import("./wheel.js").then(m => m.WheelDisplay.closeAll());
 
-        ui.notifications.info("Rad bei allen Spielern geschlossen.");
+        ui.notifications.info(game.i18n.localize("WHEEL.Notify.ClosedForAll"));
     }
 }
