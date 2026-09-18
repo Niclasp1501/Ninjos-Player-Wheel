@@ -26,6 +26,7 @@
     "WHEEL.Control.ResetUI": "RESET",
     "WHEEL.Control.Remove": "Entfernen",
     "WHEEL.Control.Toggle": "Aktivieren/Deaktivieren",
+    "WHEEL.Control.Winner": "Schon ausgewählt",
     "WHEEL.Wheel.Winner": "{name} wurde ausgewählt!",
     "WHEEL.Wheel.WinnerSelected": "{name} wurde ausgewählt!",
     "WHEEL.Willkommen.Setting": "Willkommensfenster",

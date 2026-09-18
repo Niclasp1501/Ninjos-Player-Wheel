@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- Three buttons showed their raw language key as tooltip ("Add new player", "Reset status", and the "selected recently" checkbox in the settings). The templates had a space in front of the key, so Foundry never found it.
+- The English interface was missing the texts for "Add new player", "Remove" and "Enable/Disable", and both languages were missing the tooltip on the trophy of a player who was already selected.
+
 ## [14.0.1-beta] - Beta CI Hardening and Documentation Upgrade
 - Beta workflow now runs only when relevant files change (`module.json`, `scripts`, `styles`, `templates`, `languages`, workflow file).
 - Added stronger CI checks in beta: manifest structure validation, JSON validation, and JavaScript syntax checks.
