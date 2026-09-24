@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- **The welcome window mentions Patreon.** Below the link to Ninjo's Forge, one line now says that the modules are free and stay free, and that you can support the work on Patreon and get premium add-ons. Only GMs see the window, and "Don't show again" still hides it for good.
+
 ### Fixed
 - Three buttons showed their raw language key as tooltip ("Add new player", "Reset status", and the "selected recently" checkbox in the settings). The templates had a space in front of the key, so Foundry never found it.
 - The English interface was missing the texts for "Add new player", "Remove" and "Enable/Disable", and both languages were missing the tooltip on the trophy of a player who was already selected.
