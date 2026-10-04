@@ -14,6 +14,7 @@
 - **The wheel kept drawing the same people on Foundry 14.** After every spin the chat message used `CONST.CHAT_MESSAGE_TYPES`, which Foundry 14 removed. The error stopped the step that marks the winner as done, so nobody was ever marked, no chat message appeared and the automatic reset never ran. The winner is now saved first, and the message no longer sets a type.
 - The text above the winner ("Auswahl:") and the chat message were German in every language. They now come from the language files, and the automatic reset no longer appends an English "(Auto-Reset)" to a German message.
 - **Saving the player settings dropped every player's id.** The form only knows name, colour and the two checkboxes and rebuilt the list from them, so afterwards the wheel marked the first player as drawn whoever had won. The other fields are now kept.
+- The title of the player settings window was English in every language.
 - Player names are escaped before they are shown, so a name like `<b>` is shown as text.
 - The chat message used Modesto Condensed, which has no German umlauts. It uses Foundry's font now.
 - The welcome texts no longer use dashes as punctuation.

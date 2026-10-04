@@ -7,7 +7,7 @@ export class WheelConfig extends FormApplication {
             template: "modules/ninjos-player-wheel/templates/config.hbs",
             width: 400,
             height: "auto",
-            title: "Player Wheel Configuration"
+            title: "WHEEL.ConfigTitle"
         });
     }
 
