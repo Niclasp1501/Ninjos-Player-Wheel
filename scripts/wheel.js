@@ -1,13 +1,30 @@
+/**
+ * Der Text ueber dem Gewinner: der eigene aus dem Dreh oder der Standard in
+ * der Sprache dieses Clients ("Auswahl:", "Chosen:").
+ */
+export function gewinnerText(label) {
+    const eigen = String(label ?? "").trim();
+    return eigen || game.i18n.localize("WHEEL.Wheel.Label");
+}
+
+/** Name und Text kommen aus Eingabefeldern und gehen ins HTML. */
+export function maskiere(text) {
+    const s = String(text ?? "");
+    if (foundry.utils.escapeHTML) return foundry.utils.escapeHTML(s);
+    return s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+
 export class WheelDisplay extends Application {
     constructor(options = {}) {
         super(options);
         this.winner = options.winner;
         this.duration = options.duration || 6000;
         this.segments = options.segments || [];
+        this.label = options.label ?? null;
     }
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "ninjos-player-wheel-display",
             template: "modules/ninjos-player-wheel/templates/wheel.hbs",
             width: 600,
@@ -143,9 +160,9 @@ export class WheelDisplay extends Application {
             }
 
             // WINNER REVEAL OVERLAY
-            const winnerName = this.winner.name;
+            const winnerName = maskiere(this.winner.name);
             const overlay = $(`<div class="winner-overlay" style="background: rgba(0, 0, 0, 0.4); border: none; box-shadow: none;">
-                <div class="winner-label" style="text-shadow: 0 4px 8px black; font-size: 2.5em;">Auswahl:</div>
+                <div class="winner-label" style="text-shadow: 0 4px 8px black; font-size: 2.5em;">${maskiere(gewinnerText(this.label))}</div>
                 <div class="winner-name" style="text-shadow: 0 6px 12px black, 0 0 20px #daa520; font-size: 5em;">${winnerName}</div>
             </div>`);
             html.append(overlay);
@@ -185,9 +202,9 @@ export class WheelDisplay extends Application {
                 }
 
                 // WINNER REVEAL OVERLAY
-                const winnerName = this.winner.name;
+                const winnerName = maskiere(this.winner.name);
                 const overlay = $(`<div class="winner-overlay">
-                    <div class="winner-label">Auswahl:</div>
+                    <div class="winner-label">${maskiere(gewinnerText(this.label))}</div>
                     <div class="winner-name">${winnerName}</div>
                 </div>`);
                 html.append(overlay);

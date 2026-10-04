@@ -2,7 +2,7 @@
 
 export class WheelConfig extends FormApplication {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["form", "wheel-config"],
             template: "modules/ninjos-player-wheel/templates/config.hbs",
             width: 400,
@@ -20,7 +20,7 @@ export class WheelConfig extends FormApplication {
 
     async _updateObject(event, formData) {
         // Expand data to handle the array of players correctly
-        const expanded = expandObject(formData);
+        const expanded = foundry.utils.expandObject(formData);
         const players = [];
 
         // Convert the object-based form data back to an array
@@ -44,7 +44,7 @@ export class WheelConfig extends FormApplication {
         event.preventDefault();
         const players = game.settings.get("ninjos-player-wheel", "players");
         players.push({
-            id: randomID(),
+            id: foundry.utils.randomID(),
             name: game.i18n.localize("WHEEL.Config.NewPlayer"),
             color: "#ff0000",
             wasSelected: false,

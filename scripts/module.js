@@ -1,6 +1,6 @@
 import { WheelConfig } from "./config.js";
 import { WheelDisplay } from "./wheel.js";
-import { WheelControl } from "./control.js";
+import { WheelControl, drehen } from "./control.js";
 import "./confetti.min.js"; // Side-effect import to load into window
 import { willkommenEinrichten, willkommenZeigen } from "./willkommen.js";
 import { fensterPassenEinrichten } from "./fensterpassen.js";
@@ -27,6 +27,17 @@ try {
             config: true,
             type: Boolean,
             default: true
+        });
+
+        // Text over the winner. Empty means the language default ("Auswahl:",
+        // "Chosen:"). A world setting: the GM picks it, everyone sees it.
+        game.settings.register("ninjos-player-wheel", "winnerLabel", {
+            name: "WHEEL.Settings.WinnerLabel.Name",
+            hint: "WHEEL.Settings.WinnerLabel.Hint",
+            scope: "world",
+            config: true,
+            type: String,
+            default: ""
         });
 
         // 3. Register Menu (Appears in Configure Settings -> Module Settings)
@@ -61,7 +72,11 @@ try {
         game.modules.get("ninjos-player-wheel").api = {
             openControl: () => new WheelControl().render(true),
             openConfig: () => new WheelConfig().render(true),
-            spin: (data) => WheelDisplay.show(data)
+            // Shows prepared spin data on this client only, nothing is saved.
+            spin: (data) => WheelDisplay.show(data),
+            // A real spin for everyone, as the button does it. GM only.
+            // spinWheel({ label: "Who keeps watch?" }) sets the text for this spin.
+            spinWheel: (options) => drehen(options)
         };
     });
 

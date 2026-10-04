@@ -1,11 +1,19 @@
 # Changelog
 
-## [Unreleased]
+## [14.2610.1] - Your own text above the winner, and a wheel that remembers again
 
 ### Added
+- **Text above the winner.** A new module setting replaces "Chosen:" above the drawn name and in the chat message with your own text, for example for a game that is not D&D. Everyone at the table sees the GM's text; left empty, each player sees the default in their own language. Suggested by MostSmoothestBrain in #2.
+- **`api.spinWheel({ label })` for macros.** A real spin for everyone, exactly like the button, with an optional text for this one spin ("Who keeps watch?").
 - **The welcome window mentions Patreon.** Below the link to Ninjo's Forge, one line now says that the modules are free and stay free, and that you can support the work on Patreon and get premium add-ons. Only GMs see the window, and "Don't show again" still hides it for good.
 
 ### Fixed
+- **New did nothing on Foundry 14.** It called `randomID()`, which Foundry 14 no longer provides as a global. Reported with the fix by MostSmoothestBrain in #1, thank you. The settings window had the same call, and `mergeObject` and `expandObject` are now taken from `foundry.utils` as well.
+- **The wheel kept drawing the same people on Foundry 14.** After every spin the chat message used `CONST.CHAT_MESSAGE_TYPES`, which Foundry 14 removed. The error stopped the step that marks the winner as done, so nobody was ever marked, no chat message appeared and the automatic reset never ran. The winner is now saved first, and the message no longer sets a type.
+- The text above the winner ("Auswahl:") and the chat message were German in every language. They now come from the language files, and the automatic reset no longer appends an English "(Auto-Reset)" to a German message.
+- Player names are escaped before they are shown, so a name like `<b>` is shown as text.
+- The chat message used Modesto Condensed, which has no German umlauts. It uses Foundry's font now.
+- The welcome texts no longer use dashes as punctuation.
 - Three buttons showed their raw language key as tooltip ("Add new player", "Reset status", and the "selected recently" checkbox in the settings). The templates had a space in front of the key, so Foundry never found it.
 - The English interface was missing the texts for "Add new player", "Remove" and "Enable/Disable", and both languages were missing the tooltip on the trophy of a player who was already selected.
 

@@ -45,6 +45,21 @@ and a click on **Spin the wheel!** starts the spin. **Reset** marks everyone as 
 If you like, your control window closes by itself on every spin. You set that in the module
 settings under **Auto-Close Control Window**.
 
+### Your own text
+
+Above the chosen name the wheel says *Chosen:* (or *Auswahl:* in German). In the module settings,
+**Text above the winner** replaces it with anything you like, and everyone at the table sees your
+text. Leave it empty to go back to the default in each player's language.
+
+For a single spin, a macro can set the text as well:
+
+```js
+game.modules.get("ninjos-player-wheel").api.spinWheel({ label: "Who keeps watch?" });
+```
+
+This is a real spin for everyone, the same as the button: the chosen player is marked done and
+the result goes to the chat. Only the GM can run it.
+
 ### Installation
 
 The Player Wheel is in the official Foundry package catalogue. In Foundry, open the **Add-on
