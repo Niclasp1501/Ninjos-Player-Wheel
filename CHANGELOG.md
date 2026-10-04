@@ -4,7 +4,8 @@
 
 ### Added
 - **Text above the winner.** A new module setting replaces "Chosen:" above the drawn name and in the chat message with your own text, for example for a game that is not D&D. Everyone at the table sees the GM's text; left empty, each player sees the default in their own language. Suggested by MostSmoothestBrain in #2.
-- **Settings straight from the wheel.** A sliders button in the red banner of the control window, and the same entry in its title bar, open Foundry's settings on the wheel's own tab, as in Ninjo's Shops. GMs only.
+- **Settings straight from the wheel.** A sliders button in the red banner of the control window opens Foundry's settings on the wheel's own tab, as in Ninjo's Shops. GMs only.
+- **Import player characters.** A new button takes every player who has a character assigned and adds them to the list under the character's name, in a colour that is still free on the wheel. Importing again adds nobody twice: it only follows a renamed character, and a name you already typed in by hand is linked instead of duplicated.
 - **`api.spinWheel({ label })` for macros.** A real spin for everyone, exactly like the button, with an optional text for this one spin ("Who keeps watch?").
 - **The welcome window mentions Patreon.** Below the link to Ninjo's Forge, one line now says that the modules are free and stay free, and that you can support the work on Patreon and get premium add-ons. Only GMs see the window, and "Don't show again" still hides it for good.
 
@@ -12,6 +13,7 @@
 - **New did nothing on Foundry 14.** It called `randomID()`, which Foundry 14 no longer provides as a global. Reported with the fix by MostSmoothestBrain in #1, thank you. The settings window had the same call, and `mergeObject` and `expandObject` are now taken from `foundry.utils` as well.
 - **The wheel kept drawing the same people on Foundry 14.** After every spin the chat message used `CONST.CHAT_MESSAGE_TYPES`, which Foundry 14 removed. The error stopped the step that marks the winner as done, so nobody was ever marked, no chat message appeared and the automatic reset never ran. The winner is now saved first, and the message no longer sets a type.
 - The text above the winner ("Auswahl:") and the chat message were German in every language. They now come from the language files, and the automatic reset no longer appends an English "(Auto-Reset)" to a German message.
+- **Saving the player settings dropped every player's id.** The form only knows name, colour and the two checkboxes and rebuilt the list from them, so afterwards the wheel marked the first player as drawn whoever had won. The other fields are now kept.
 - Player names are escaped before they are shown, so a name like `<b>` is shown as text.
 - The chat message used Modesto Condensed, which has no German umlauts. It uses Foundry's font now.
 - The welcome texts no longer use dashes as punctuation.

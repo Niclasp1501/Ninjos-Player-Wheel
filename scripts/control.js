@@ -96,6 +96,62 @@ export async function einstellungenOeffnen() {
     }
 }
 
+// Harmonic Palette (Jewel Tones & Earth Tones)
+const PALETTE = [
+    "#541811", // Deep Red
+    "#1b4d3e", // Forest Green
+    "#1f2e54", // Navy Blue
+    "#4a2c58", // Plum Purple
+    "#8b5a2b", // Bronze/Brown
+    "#702963", // Byzantium
+    "#004242", // Deep Teal
+    "#5c0002"  // Blood Red
+];
+
+/** Eine Farbe, die auf dem Rad noch frei ist; erst wenn alle vergeben sind, zufaellig. */
+function freieFarbe(players) {
+    const belegt = new Set(players.map(p => p.color));
+    const frei = PALETTE.filter(f => !belegt.has(f));
+    const auswahl = frei.length ? frei : PALETTE;
+    return auswahl[Math.floor(Math.random() * auswahl.length)];
+}
+
+/**
+ * Uebernimmt die Figur jedes Spielers, dem eine zugewiesen ist, mit dem Namen
+ * der Figur. Ein Eintrag merkt sich die Figur (`actorId`): Ein zweiter Import
+ * legt ihn nicht doppelt an, sondern zieht nur einen geaenderten Namen nach.
+ * Steht derselbe Name schon von Hand in der Liste, wird dieser Eintrag mit der
+ * Figur verknuepft statt verdoppelt.
+ *
+ * @returns {{neu: number, umbenannt: number}}
+ */
+export function figurenUebernehmen(players) {
+    let neu = 0, umbenannt = 0;
+    const gleicherName = (a, b) => a.trim().toLocaleLowerCase() === b.trim().toLocaleLowerCase();
+    for (const user of game.users) {
+        if (user.isGM) continue;
+        const actor = user.character;
+        if (!actor) continue;
+        const eintrag = players.find(p => p.actorId === actor.id)
+            ?? players.find(p => !p.actorId && gleicherName(p.name ?? "", actor.name));
+        if (eintrag) {
+            eintrag.actorId = actor.id;
+            if (eintrag.name !== actor.name) { eintrag.name = actor.name; umbenannt++; }
+            continue;
+        }
+        players.push({
+            id: foundry.utils.randomID(),
+            name: actor.name,
+            color: freieFarbe(players),
+            wasSelected: false,
+            active: true,
+            actorId: actor.id
+        });
+        neu++;
+    }
+    return { neu, umbenannt };
+}
+
 function chatInhalt(name, label) {
     const t = key => game.i18n.localize(key);
     return `
@@ -134,20 +190,6 @@ export class WheelControl extends FormApplication {
         };
     }
 
-    /** Die Einstellungen auch in der Titelleiste, wie bei Ninjo's Shops. */
-    _getHeaderButtons() {
-        const buttons = super._getHeaderButtons();
-        if (game.user.isGM) {
-            buttons.unshift({
-                label: "WHEEL.Control.Settings",
-                class: "wheel-einstellungen-kopf",
-                icon: "fa-solid fa-sliders",
-                onclick: () => einstellungenOeffnen()
-            });
-        }
-        return buttons;
-    }
-
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".wheel-einstellungen").click(event => {
@@ -157,6 +199,7 @@ export class WheelControl extends FormApplication {
 
         // Player Management
         html.find(".player-add").click(this._onAddPlayer.bind(this));
+        html.find(".player-import").click(this._onImportPlayers.bind(this));
         html.find(".player-remove").click(this._onRemovePlayer.bind(this));
         html.find(".player-toggle").click(this._onTogglePlayer.bind(this));
         html.find(".player-reset").click(this._onResetStatus.bind(this));
@@ -187,29 +230,27 @@ export class WheelControl extends FormApplication {
         event.preventDefault();
         const players = game.settings.get("ninjos-player-wheel", "players");
 
-        // Harmonic Palette (Jewel Tones & Earth Tones)
-        const palette = [
-            "#541811", // Deep Red
-            "#1b4d3e", // Forest Green
-            "#1f2e54", // Navy Blue
-            "#4a2c58", // Plum Purple
-            "#8b5a2b", // Bronze/Brown
-            "#702963", // Byzantium
-            "#004242", // Deep Teal
-            "#5c0002"  // Blood Red
-        ];
-
-        // Pick a random color
-        const randomColor = palette[Math.floor(Math.random() * palette.length)];
-
         players.push({
             id: foundry.utils.randomID(),
             name: game.i18n.localize("WHEEL.Config.NewPlayer"),
-            color: randomColor,
+            color: freieFarbe(players),
             wasSelected: false,
             active: true
         });
         await game.settings.set("ninjos-player-wheel", "players", players);
+        this.render();
+    }
+
+    async _onImportPlayers(event) {
+        event.preventDefault();
+        const players = game.settings.get(MODUL, "players");
+        const { neu, umbenannt } = figurenUebernehmen(players);
+        if (!neu && !umbenannt) {
+            ui.notifications.info(game.i18n.localize("WHEEL.Notify.ImportNone"));
+            return;
+        }
+        await game.settings.set(MODUL, "players", players);
+        ui.notifications.info(game.i18n.format("WHEEL.Notify.Imported", { neu, umbenannt }));
         this.render();
     }
 

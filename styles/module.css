@@ -68,8 +68,7 @@
     border-bottom: 2px solid var(--ninjos-player-wheel-accent-gold);
 }
 
-/* Settings button in the banner, as in Ninjo's Shops: gold on red. The same
-   action sits in the title bar too, which is always in the same place. */
+/* Settings button in the banner, as in Ninjo's Shops: gold on red. */
 .ninjos-player-wheel-container .sidebar-header .wheel-einstellungen {
     position: absolute;
     top: 50%;

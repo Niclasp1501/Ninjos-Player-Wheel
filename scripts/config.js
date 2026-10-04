@@ -21,13 +21,23 @@ export class WheelConfig extends FormApplication {
     async _updateObject(event, formData) {
         // Expand data to handle the array of players correctly
         const expanded = foundry.utils.expandObject(formData);
+        const bisher = game.settings.get("ninjos-player-wheel", "players");
         const players = [];
 
-        // Convert the object-based form data back to an array
+        // Das Formular kennt nur Name, Farbe und die zwei Haken. Alles andere,
+        // vor allem `id` und `actorId`, kommt aus dem gespeicherten Eintrag an
+        // derselben Stelle; sonst verlor jeder Spieler beim Speichern seine
+        // Kennung, und das Rad markierte danach immer den ersten als gezogen.
         for (const key in expanded.players) {
-            if (expanded.players.hasOwnProperty(key)) {
-                players.push(expanded.players[key]);
-            }
+            if (!Object.hasOwn(expanded.players, key)) continue;
+            const feld = expanded.players[key];
+            players.push({
+                ...(bisher[Number(key)] ?? { id: foundry.utils.randomID() }),
+                name: feld.name,
+                color: feld.color,
+                active: Boolean(feld.active),
+                wasSelected: Boolean(feld.wasSelected)
+            });
         }
 
         await game.settings.set("ninjos-player-wheel", "players", players);
