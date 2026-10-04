@@ -6,6 +6,7 @@
 - **Text above the winner.** A new module setting replaces "Chosen:" above the drawn name and in the chat message with your own text, for example for a game that is not D&D. Everyone at the table sees the GM's text; left empty, each player sees the default in their own language. Suggested by MostSmoothestBrain in #2.
 - **Settings straight from the wheel.** A sliders button in the red banner of the control window opens Foundry's settings on the wheel's own tab, as in Ninjo's Shops. GMs only.
 - **Import player characters.** A new button takes every player who has a character assigned and adds them to the list under the character's name, in a colour that is still free on the wheel. Importing again adds nobody twice: it only follows a renamed character, and a name you already typed in by hand is linked instead of duplicated.
+- **Eight more languages.** French, Spanish, Brazilian Portuguese, Italian, Polish, Russian, Czech and Dutch, the same set as FANG. The shared lines of the welcome window use FANG's wording.
 - **`api.spinWheel({ label })` for macros.** A real spin for everyone, exactly like the button, with an optional text for this one spin ("Who keeps watch?").
 - **The welcome window mentions Patreon.** Below the link to Ninjo's Forge, one line now says that the modules are free and stay free, and that you can support the work on Patreon and get premium add-ons. Only GMs see the window, and "Don't show again" still hides it for good.
 
@@ -17,7 +18,7 @@
 - The title of the player settings window was English in every language.
 - Player names are escaped before they are shown, so a name like `<b>` is shown as text.
 - The chat message used Modesto Condensed, which has no German umlauts. It uses Foundry's font now.
-- The welcome texts no longer use dashes as punctuation.
+- The welcome texts no longer use dashes as punctuation, and they no longer claim that the spin time varies: the wheel always spins for eight seconds.
 - Three buttons showed their raw language key as tooltip ("Add new player", "Reset status", and the "selected recently" checkbox in the settings). The templates had a space in front of the key, so Foundry never found it.
 - The English interface was missing the texts for "Add new player", "Remove" and "Enable/Disable", and both languages were missing the tooltip on the trophy of a player who was already selected.
 

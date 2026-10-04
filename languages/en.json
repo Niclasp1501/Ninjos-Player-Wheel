@@ -44,7 +44,7 @@
     "WHEEL.Willkommen.Untertitel": "Whose turn is it next?",
     "WHEEL.Willkommen.Einleitung": "The player wheel decides visibly, for everyone at once, who goes next. Instead of \"erm, who hasn't had a turn?\" a wheel spins and the whole table sees the same result.",
     "WHEEL.Willkommen.Punkt1": "<strong>Fair rotation</strong>: whoever has had a turn is marked done and stays out of the draw until everyone has been picked once.",
-    "WHEEL.Willkommen.Punkt2": "<strong>Suspense, not a random number</strong>: the spin time varies and the wheel coasts to a halt. A roll behind the scenes does not feel like that.",
+    "WHEEL.Willkommen.Punkt2": "<strong>Suspense, not a random number</strong>: the wheel spins for eight seconds and slowly coasts to a halt. A roll behind the scenes does not feel like that.",
     "WHEEL.Willkommen.Punkt3": "<strong>Everyone watches</strong>: the spin runs over the socket on every screen, not just yours. The window can close itself once the winner is revealed.",
     "WHEEL.Willkommen.Start": "To begin: <strong>Shift+W</strong> opens the wheel, or the wheel icon in the token controls. Add the names, spin, done.",
     "WHEEL.Willkommen.ForgeZeile": "Every module, its documentation and the German translations in one place: open the module page",

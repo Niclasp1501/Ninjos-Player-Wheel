@@ -42,6 +42,11 @@ Open the wheel with `Shift + W` or with the wheel icon in the token controls. Bo
 available to you as the GM. Use **New** to add names, each one gets a colour on the wheel,
 and a click on **Spin the wheel!** starts the spin. **Reset** marks everyone as available again.
 
+**Characters** fills the list for you: every player who has a character assigned in their user
+configuration is added under the character's name. Click it again after a character was renamed
+or a new player joined; nobody is added twice. The sliders button in the red banner opens the
+wheel's settings.
+
 If you like, your control window closes by itself on every spin. You set that in the module
 settings under **Auto-Close Control Window**.
 
@@ -70,7 +75,8 @@ You can also use this manifest URL:
 `https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/latest/download/module.json`
 
 You need Foundry VTT v13 or v14. The wheel isn't tied to any game system and works with whatever
-you play in Foundry.
+you play in Foundry. It speaks English, German, French, Spanish, Brazilian Portuguese, Italian,
+Polish, Russian, Czech and Dutch.
 
 ---
 
@@ -110,8 +116,28 @@ Spielleiter zur Verfügung. Mit **Neu** fügst du Namen hinzu, jeder bekommt ein
 dem Rad, und ein Klick auf **Am Rad drehen!** startet die Drehung. Mit **Reset** setzt du fest, dass
 wieder alle dran sein dürfen.
 
+**Figuren** füllt die Liste für dich: Jeder Spieler, dem in der Benutzerkonfiguration eine Figur
+zugewiesen ist, landet unter dem Namen seiner Figur auf dem Rad. Klick ruhig noch einmal, wenn eine
+Figur umbenannt wurde oder jemand Neues dabei ist; doppelt kommt niemand hinein. Der Regler-Knopf
+im roten Kopf öffnet die Einstellungen des Rads.
+
 Wenn du möchtest, schließt sich dein Steuerfenster bei jedem Dreh von selbst. Das stellst du in den
 Moduleinstellungen unter **Steuerung automatisch schließen** ein.
+
+### Eigener Text
+
+Über dem gezogenen Namen steht *Auswahl:* (auf Englisch *Chosen:*). In den Moduleinstellungen
+ersetzt **Text über dem Gewinner** das durch einen Text deiner Wahl, und alle am Tisch sehen
+deinen Text. Bleibt das Feld leer, sieht jeder den Standard in seiner eigenen Sprache.
+
+Für einen einzelnen Dreh kann auch ein Makro den Text setzen:
+
+```js
+game.modules.get("ninjos-player-wheel").api.spinWheel({ label: "Wer hält Wache?" });
+```
+
+Das ist ein echter Dreh für alle, genau wie über den Knopf: Der Gezogene gilt als erledigt, und das
+Ergebnis landet im Chat. Nur die Spielleitung kann das Makro ausführen.
 
 ### Installation
 
@@ -123,7 +149,8 @@ Du kannst auch diese Manifest-Adresse verwenden:
 `https://github.com/Niclasp1501/Ninjos-Player-Wheel/releases/latest/download/module.json`
 
 Du brauchst Foundry VTT v13 oder v14. Das Rad hängt an keinem Spielsystem und läuft mit jedem,
-das du in Foundry spielst.
+das du in Foundry spielst. Es spricht Deutsch, Englisch, Französisch, Spanisch, brasilianisches
+Portugiesisch, Italienisch, Polnisch, Russisch, Tschechisch und Niederländisch.
 
 ---
 

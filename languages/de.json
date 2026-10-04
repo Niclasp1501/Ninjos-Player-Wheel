@@ -44,7 +44,7 @@
     "WHEEL.Willkommen.Untertitel": "Wer ist als Nächstes dran?",
     "WHEEL.Willkommen.Einleitung": "Das Spieler-Rad entscheidet sichtbar für alle, wer als Nächstes dran ist. Statt „ähm, wer war noch nicht?“ dreht sich ein Rad, und jeder am Tisch sieht dasselbe Ergebnis.",
     "WHEEL.Willkommen.Punkt1": "<strong>Faire Reihenfolge</strong>: Wer dran war, wird als erledigt vermerkt und taucht in der Runde nicht wieder auf, bis alle einmal an der Reihe waren.",
-    "WHEEL.Willkommen.Punkt2": "<strong>Spannung statt Zufallszahl</strong>: Die Drehdauer wechselt, das Rad läuft langsam aus. Ein Würfelwurf im Hintergrund fühlt sich nicht so an.",
+    "WHEEL.Willkommen.Punkt2": "<strong>Spannung statt Zufallszahl</strong>: Das Rad dreht sich acht Sekunden und läuft langsam aus. Ein Würfelwurf im Hintergrund fühlt sich nicht so an.",
     "WHEEL.Willkommen.Punkt3": "<strong>Alle sehen mit</strong>: Die Drehung läuft über den Socket auf jedem Bildschirm, nicht nur auf deinem. Auf Wunsch schliesst sich das Fenster nach der Auflösung von selbst.",
     "WHEEL.Willkommen.Start": "Zum Anfangen: <strong>Shift+W</strong> öffnet das Rad, oder das Rad-Symbol in der Token-Leiste. Namen eintragen, drehen, fertig.",
     "WHEEL.Willkommen.ForgeZeile": "Alle Module, Anleitungen und deutschen Übersetzungen an einem Ort: Modulseite öffnen",
