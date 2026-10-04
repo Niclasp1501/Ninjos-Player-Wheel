@@ -26,6 +26,7 @@
     "WHEEL.Control.ResetUI": "RESET",
     "WHEEL.Control.Remove": "Remove",
     "WHEEL.Control.Toggle": "Enable/Disable",
+    "WHEEL.Control.Settings": "Settings",
     "WHEEL.Control.Winner": "Already selected",
     "WHEEL.Wheel.Winner": "{name} was selected!",
     "WHEEL.Wheel.WinnerSelected": "{name} was selected!",

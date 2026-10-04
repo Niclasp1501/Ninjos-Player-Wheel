@@ -4,6 +4,12 @@
         <header class="sidebar-header" style="text-align: center;">
             <h1>{{localize "WHEEL.Control.Title"}}</h1>
             <p>{{localize "WHEEL.Control.Description"}}</p>
+            {{#if isGM}}
+            <button type="button" class="wheel-einstellungen" title="{{localize "WHEEL.Control.Settings"}}"
+                aria-label="{{localize "WHEEL.Control.Settings"}}">
+                <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+            </button>
+            {{/if}}
         </header>
 
         <!-- Body / Player List -->

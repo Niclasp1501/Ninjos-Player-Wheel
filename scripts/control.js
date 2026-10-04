@@ -79,6 +79,23 @@ export function drehen({ label } = {}) {
     }, duration));
 }
 
+/**
+ * Foundrys Einstellungen, gleich auf dem Reiter dieses Moduls. Derselbe Weg
+ * wie ueber "Spieleinstellungen", nur ohne Suchen. Das Fenster ist ein
+ * Einzelstueck, deshalb wird der Reiter nach dem Zeichnen gewechselt; die
+ * Startkategorie gilt nur beim allerersten Oeffnen.
+ */
+export async function einstellungenOeffnen() {
+    if (!game.user.isGM) return;
+    const fenster = game.settings.sheet;
+    await fenster.render({ force: true });
+    try {
+        fenster.changeTab(MODUL, "categories");
+    } catch (err) {
+        console.warn("Player Wheel | Could not switch to the module's settings tab", err);
+    }
+}
+
 function chatInhalt(name, label) {
     const t = key => game.i18n.localize(key);
     return `
@@ -117,8 +134,26 @@ export class WheelControl extends FormApplication {
         };
     }
 
+    /** Die Einstellungen auch in der Titelleiste, wie bei Ninjo's Shops. */
+    _getHeaderButtons() {
+        const buttons = super._getHeaderButtons();
+        if (game.user.isGM) {
+            buttons.unshift({
+                label: "WHEEL.Control.Settings",
+                class: "wheel-einstellungen-kopf",
+                icon: "fa-solid fa-sliders",
+                onclick: () => einstellungenOeffnen()
+            });
+        }
+        return buttons;
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
+        html.find(".wheel-einstellungen").click(event => {
+            event.preventDefault();
+            einstellungenOeffnen();
+        });
 
         // Player Management
         html.find(".player-add").click(this._onAddPlayer.bind(this));

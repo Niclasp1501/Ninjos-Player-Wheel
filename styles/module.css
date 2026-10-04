@@ -61,10 +61,41 @@
 
 /* Header (D&D Style) */
 .ninjos-player-wheel-container .sidebar-header {
+    position: relative;
     background-color: var(--ninjos-player-wheel-primary-red);
     color: var(--ninjos-player-wheel-header-text);
-    padding: 15px 20px;
+    padding: 15px 56px;
     border-bottom: 2px solid var(--ninjos-player-wheel-accent-gold);
+}
+
+/* Settings button in the banner, as in Ninjo's Shops: gold on red. The same
+   action sits in the title bar too, which is always in the same place. */
+.ninjos-player-wheel-container .sidebar-header .wheel-einstellungen {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    min-width: var(--ninjo-tippziel, 36px);
+    min-height: var(--ninjo-tippziel, 36px);
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--ninjos-player-wheel-primary-red);
+    background: var(--ninjos-player-wheel-accent-gold);
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ninjos-player-wheel-container .sidebar-header .wheel-einstellungen:hover,
+.ninjos-player-wheel-container .sidebar-header .wheel-einstellungen:focus-visible {
+    color: var(--ninjos-player-wheel-header-text);
+    background: var(--ninjos-player-wheel-primary-red);
+    border-color: var(--ninjos-player-wheel-accent-gold);
 }
 
 .ninjos-player-wheel-container .sidebar-header h1 {

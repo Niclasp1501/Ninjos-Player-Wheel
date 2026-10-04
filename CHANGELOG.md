@@ -4,6 +4,7 @@
 
 ### Added
 - **Text above the winner.** A new module setting replaces "Chosen:" above the drawn name and in the chat message with your own text, for example for a game that is not D&D. Everyone at the table sees the GM's text; left empty, each player sees the default in their own language. Suggested by MostSmoothestBrain in #2.
+- **Settings straight from the wheel.** A sliders button in the red banner of the control window, and the same entry in its title bar, open Foundry's settings on the wheel's own tab, as in Ninjo's Shops. GMs only.
 - **`api.spinWheel({ label })` for macros.** A real spin for everyone, exactly like the button, with an optional text for this one spin ("Who keeps watch?").
 - **The welcome window mentions Patreon.** Below the link to Ninjo's Forge, one line now says that the modules are free and stay free, and that you can support the work on Patreon and get premium add-ons. Only GMs see the window, and "Don't show again" still hides it for good.
 
