@@ -65,5 +65,7 @@
     "WHEEL.Confirm.Cancel": "Cancel",
     "WHEEL.Control.EditName": "Edit name",
     "WHEEL.Config.NamePlaceholder": "Player name",
-    "WHEEL.Config.NewPlayer": "New player"
+    "WHEEL.Config.NewPlayer": "New player",
+    "WHEEL.Config.Color": "Colour",
+    "WHEEL.WindowTitle": "Ninjo's Player Wheel"
 }

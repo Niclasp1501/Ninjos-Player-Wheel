@@ -27,15 +27,22 @@ Verbessert man eine davon, gehört sie in alle Module nachgezogen.
 Standardname eines neuen Spielers und der eine deutsche Toast liefen an den
 Sprachdateien vorbei und stehen jetzt als Schlüssel darin. Die Symbolknöpfe in
 beiden Listen sind echte `<button>` mit `aria-label` statt `<a>` ohne
-Ziel, der Umschalter trägt `aria-pressed`. Und **das Entfernen fragt nach** —
-`_frageEntfernen()` in `control.js` und `config.js`, mit `DialogV2`,
-obwohl die Fenster selbst noch alt sind.
+Ziel, der Umschalter trägt `aria-pressed`. Und **das Entfernen fragt nach**:
+`frageEntfernen()` in `control.js`, mit `DialogV2`, für beide Listen.
 
-**Offen, und hier am billigsten zu haben:** Das Modul steht mit drei Fenstern
-und 825 Zeilen noch auf `FormApplication`. Es ist das kleinste im Portfolio
-und damit der richtige Ort, die Ablösung nach ApplicationV2 einmal komplett
-durchzuexerzieren — danach ist es das Muster für das MCP-Modul. Dabei
-gleich die 25 Inline-Styles aus den Vorlagen in `styles/module.css` ziehen.
+**Seit 14.2611.1 ist alles ApplicationV2** (`HandlebarsApplicationMixin`),
+keine Zeile mehr auf `Application` oder `FormApplication`. Die Knöpfe laufen
+über `data-action` und `DEFAULT_OPTIONS.actions`, die Formulare über
+`form.handler`: im Steuerfenster mit `submitOnChange` für die Namen, im
+Einstellungsfenster mit `closeOnSubmit` wie vorher. Geöffnet wird über
+`steuerungOeffnen()` und `WheelConfig.oeffnen()`, die ein offenes Fenster nach
+vorn holen statt ein zweites mit derselben Kennung anzulegen. Das Rad behält
+seinen Rahmen samt `.window-content` und die Kennung
+`#ninjos-player-wheel-display`, weil das CSS darauf zielt.
+
+**Noch offen:** die Inline-Styles in `templates/config.hbs` und
+`templates/control.hbs` nach `styles/module.css` ziehen. Die aus `wheel.js`
+sind seit 14.2611.1 die Klasse `winner-overlay-sofort`.
 
 **`common-display`** am Rad-Fenster ist eine Kopplung an Monk's Common Display.
 Sie ist nirgends dokumentiert und niemand weiß mehr, ob sie noch gebraucht wird.

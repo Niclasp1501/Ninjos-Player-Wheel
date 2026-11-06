@@ -65,5 +65,7 @@
     "WHEEL.Confirm.Cancel": "Zrušit",
     "WHEEL.Control.EditName": "Upravit jméno",
     "WHEEL.Config.NamePlaceholder": "Jméno hráče",
-    "WHEEL.Config.NewPlayer": "Nový hráč"
+    "WHEEL.Config.NewPlayer": "Nový hráč",
+    "WHEEL.Config.Color": "Barva",
+    "WHEEL.WindowTitle": "Ninjo's Player Wheel"
 }

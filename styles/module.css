@@ -375,6 +375,24 @@
     transform: translate(-50%, -50%) scale(1);
 }
 
+/* Instant reveal (a single candidate): no spin, lighter backdrop, bigger text.
+   Until 14.2610.1 these were inline styles in wheel.js. */
+.winner-overlay.winner-overlay-sofort {
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    box-shadow: none;
+}
+
+.winner-overlay-sofort .winner-label {
+    text-shadow: 0 4px 8px black;
+    font-size: 2.5em;
+}
+
+.winner-overlay-sofort .winner-name {
+    text-shadow: 0 6px 12px black, 0 0 20px #daa520;
+    font-size: 5em;
+}
+
 .winner-label {
     font-family: "Modesto Condensed", serif;
     font-size: 2em;
@@ -432,6 +450,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /* ApplicationV2 blurs what lies behind a window in the dark theme. Behind
+       the wheel that is the canvas, and the blur would show as a square. */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+/* ApplicationV2 frames clip their content and cap their height. The winner
+   overlay is larger than the wheel, and the wheel keeps its 600 pixels. */
+#ninjos-player-wheel-display.application {
+    overflow: visible;
+    max-height: none;
+    min-width: 0;
+    min-height: 0;
 }
 
 .wheel-container {

@@ -1,6 +1,6 @@
 import { WheelConfig } from "./config.js";
 import { WheelDisplay } from "./wheel.js";
-import { WheelControl, drehen } from "./control.js";
+import { steuerungOeffnen, drehen } from "./control.js";
 import "./confetti.min.js"; // Side-effect import to load into window
 import { willkommenEinrichten, willkommenZeigen } from "./willkommen.js";
 import { fensterPassenEinrichten } from "./fensterpassen.js";
@@ -59,7 +59,7 @@ try {
             ],
             onDown: () => {
                 if (game.user.isGM) {
-                    new WheelControl().render(true);
+                    steuerungOeffnen();
                     return true;
                 }
                 return false;
@@ -70,8 +70,8 @@ try {
 
         // 4. Expose API for Macros
         game.modules.get("ninjos-player-wheel").api = {
-            openControl: () => new WheelControl().render(true),
-            openConfig: () => new WheelConfig().render(true),
+            openControl: () => steuerungOeffnen(),
+            openConfig: () => WheelConfig.oeffnen(),
             // Shows prepared spin data on this client only, nothing is saved.
             spin: (data) => WheelDisplay.show(data),
             // A real spin for everyone, as the button does it. GM only.
@@ -123,11 +123,7 @@ Hooks.on('getSceneControlButtons', (controls) => {
                 icon: "fas fa-dharmachakra",
                 button: true,
                 visible: true,
-                onClick: () => {
-                    const windowExists = Object.values(ui.windows).some(w => w.id === "ninjos-player-wheel-control");
-                    if (windowExists) return;
-                    game.modules.get("ninjos-player-wheel").api.openControl();
-                }
+                onClick: () => steuerungOeffnen()
             });
         }
     }
@@ -143,11 +139,8 @@ Hooks.on('getSceneControlButtons', (controls) => {
                 order: Object.keys(tokenGroup.tools).length,
                 button: true,
                 visible: true,
-                onChange: () => {
-                    const windowExists = Object.values(ui.windows).some(w => w.id === "ninjos-player-wheel-control");
-                    if (windowExists) return;
-                    game.modules.get("ninjos-player-wheel").api.openControl();
-                }
+                // Ist das Fenster schon offen, kommt es nach vorn statt doppelt.
+                onChange: () => steuerungOeffnen()
             };
         }
     }

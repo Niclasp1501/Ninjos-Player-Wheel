@@ -2,7 +2,12 @@
 
 import { WheelDisplay, gewinnerText, maskiere } from "./wheel.js";
 
+const { ApplicationV2, HandlebarsApplicationMixin, DialogV2 } = foundry.applications.api;
+
 const MODUL = "ninjos-player-wheel";
+
+/** Kennung des Steuerfensters. Es gibt hoechstens eins. */
+export const STEUERUNG_ID = "ninjos-player-wheel-control";
 
 /**
  * Dreht das Rad fuer alle: Gewinner ziehen, Drehung an jeden Client schicken,
@@ -109,7 +114,7 @@ const PALETTE = [
 ];
 
 /** Eine Farbe, die auf dem Rad noch frei ist; erst wenn alle vergeben sind, zufaellig. */
-function freieFarbe(players) {
+export function freieFarbe(players) {
     const belegt = new Set(players.map(p => p.color));
     const frei = PALETTE.filter(f => !belegt.has(f));
     const auswahl = frei.length ? frei : PALETTE;
@@ -163,72 +168,118 @@ function chatInhalt(name, label) {
     `;
 }
 
-export class WheelControl extends FormApplication {
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            id: "ninjos-player-wheel-control",
-            title: "Ninjo's Player Wheel",
-            template: "modules/ninjos-player-wheel/templates/control.hbs",
+/**
+ * Wirklich entfernen?
+ *
+ * Ein Spieler war mit einem Tipp aus der Liste, und es gibt kein
+ * Rueckgaengig: Die Liste ist eine Welteinstellung, keine Dokumenthistorie.
+ * Also fragen wir. Der Knopf heisst "Entfernen", nicht "Ja"; Wegklicken und
+ * Escape zaehlen als Nein (`rejectClose: false` gibt dann `null`).
+ *
+ * Steuerfenster und Einstellungsfenster fragen beide hier, damit es dieselbe
+ * Frage bleibt. Der Name kommt aus einem Eingabefeld und wird maskiert.
+ */
+export async function frageEntfernen(name) {
+    const antwort = await DialogV2.confirm({
+        window: { title: game.i18n.localize("WHEEL.Confirm.RemoveTitle") },
+        content: `<p>${game.i18n.format("WHEEL.Confirm.RemoveBody", { name: maskiere(name) })}</p>`,
+        yes: { label: game.i18n.localize("WHEEL.Confirm.RemoveYes"), icon: "fa-solid fa-trash" },
+        no: { label: game.i18n.localize("WHEEL.Confirm.Cancel"), default: true },
+        rejectClose: false
+    });
+    return antwort === true;
+}
+
+/**
+ * Das Steuerfenster oeffnen oder, wenn es schon offen ist, nach vorn holen.
+ * Tastenkuerzel, Werkzeugknopf und `api.openControl()` gehen alle hier durch.
+ */
+export function steuerungOeffnen() {
+    const offen = foundry.applications.instances.get(STEUERUNG_ID);
+    return (offen ?? new WheelControl()).render({ force: true });
+}
+
+/**
+ * Das Fenster, aus dem die Spielleitung dreht: Liste pflegen, Rad drehen.
+ *
+ * Seit 14.2611.1 ApplicationV2 statt `FormApplication`. Die Knoepfe laufen
+ * ueber `data-action`, die Namensfelder ueber das Formular mit
+ * `submitOnChange`: Ein geaenderter Name wird beim Verlassen des Feldes
+ * gespeichert, wie vorher mit dem eigenen `change`-Lauscher.
+ */
+export class WheelControl extends HandlebarsApplicationMixin(ApplicationV2) {
+    static DEFAULT_OPTIONS = {
+        id: STEUERUNG_ID,
+        tag: "form",
+        classes: ["ninjos-player-wheel-window"],
+        window: {
+            title: "WHEEL.WindowTitle",
+            resizable: false
+        },
+        position: {
             width: 450,
-            height: "auto",
-            classes: ["ninjos-player-wheel-window"],
-            closeOnSubmit: false,
-            submitOnClose: false
-        });
-    }
+            height: "auto"
+        },
+        form: {
+            handler: WheelControl.#onSubmit,
+            submitOnChange: true,
+            closeOnSubmit: false
+        },
+        actions: {
+            openSettings: WheelControl.#onOpenSettings,
+            addPlayer: WheelControl.#onAddPlayer,
+            importPlayers: WheelControl.#onImportPlayers,
+            removePlayer: WheelControl.#onRemovePlayer,
+            togglePlayer: WheelControl.#onTogglePlayer,
+            resetStatus: WheelControl.#onResetStatus,
+            spin: WheelControl.#onSpin,
+            closeWheel: WheelControl.#onCloseWheel
+        }
+    };
 
-    getData() {
-        // Get all players
-        let players = game.settings.get("ninjos-player-wheel", "players") || [];
+    static PARTS = {
+        steuerung: { template: "modules/ninjos-player-wheel/templates/control.hbs" }
+    };
 
-        // Return data for template
-        return {
+    async _prepareContext(options) {
+        const context = await super._prepareContext(options);
+        const players = game.settings.get(MODUL, "players") || [];
+        return Object.assign(context, {
             players: players,
             hasPlayers: players.length > 0,
             canSpin: players.filter(p => p.active && !p.wasSelected).length >= 1,
             isGM: game.user.isGM
-        };
-    }
-
-    activateListeners(html) {
-        super.activateListeners(html);
-        html.find(".wheel-einstellungen").click(event => {
-            event.preventDefault();
-            einstellungenOeffnen();
         });
-
-        // Player Management
-        html.find(".player-add").click(this._onAddPlayer.bind(this));
-        html.find(".player-import").click(this._onImportPlayers.bind(this));
-        html.find(".player-remove").click(this._onRemovePlayer.bind(this));
-        html.find(".player-toggle").click(this._onTogglePlayer.bind(this));
-        html.find(".player-reset").click(this._onResetStatus.bind(this));
-        html.find(".player-name-input").change(this._onNameChange.bind(this));
-
-        // Spin
-        html.find(".spin-button").click(this._onSpin.bind(this));
-        html.find(".close-wheel-button").click(this._onCloseWheel.bind(this));
     }
 
-    async _onNameChange(event) {
-        event.preventDefault();
-        const index = event.currentTarget.dataset.index;
-        const newName = event.currentTarget.value;
-        const players = game.settings.get("ninjos-player-wheel", "players");
-
-        if (players[index]) {
-            players[index].name = newName;
-            await game.settings.set("ninjos-player-wheel", "players", players);
+    /**
+     * Ein Name wurde geaendert (Formular mit `submitOnChange`).
+     *
+     * Nur die Namen stehen im Formular. Gespeichert wird, was sich geaendert
+     * hat, ohne neu zu zeichnen: Sonst sprang der Cursor beim Wechsel in das
+     * naechste Feld heraus, und das tat er vorher auch nicht.
+     */
+    static async #onSubmit(event, form, formData) {
+        const felder = foundry.utils.expandObject(formData.object).players ?? {};
+        const players = game.settings.get(MODUL, "players");
+        let geaendert = false;
+        for (const [index, feld] of Object.entries(felder)) {
+            const eintrag = players[Number(index)];
+            if (!eintrag || typeof feld?.name !== "string" || eintrag.name === feld.name) continue;
+            eintrag.name = feld.name;
+            geaendert = true;
         }
+        if (geaendert) await game.settings.set(MODUL, "players", players);
     }
 
-    async _updateObject(event, formData) {
-        // Not used for standard form submission, we use actions
-    }
-
-    async _onAddPlayer(event) {
+    static #onOpenSettings(event) {
         event.preventDefault();
-        const players = game.settings.get("ninjos-player-wheel", "players");
+        einstellungenOeffnen();
+    }
+
+    static async #onAddPlayer(event) {
+        event.preventDefault();
+        const players = game.settings.get(MODUL, "players");
 
         players.push({
             id: foundry.utils.randomID(),
@@ -237,11 +288,11 @@ export class WheelControl extends FormApplication {
             wasSelected: false,
             active: true
         });
-        await game.settings.set("ninjos-player-wheel", "players", players);
+        await game.settings.set(MODUL, "players", players);
         this.render();
     }
 
-    async _onImportPlayers(event) {
+    static async #onImportPlayers(event) {
         event.preventDefault();
         const players = game.settings.get(MODUL, "players");
         const { neu, umbenannt } = figurenUebernehmen(players);
@@ -254,72 +305,59 @@ export class WheelControl extends FormApplication {
         this.render();
     }
 
-    async _onRemovePlayer(event) {
+    static async #onRemovePlayer(event, target) {
         event.preventDefault();
-        const index = event.currentTarget.dataset.index;
-        const players = game.settings.get("ninjos-player-wheel", "players");
-        if (!await this._frageEntfernen(players[index]?.name ?? "")) return;
-        players.splice(index, 1);
-        await game.settings.set("ninjos-player-wheel", "players", players);
+        const index = Number(target.dataset.index);
+        const players = game.settings.get(MODUL, "players");
+        const eintrag = players[index];
+        if (!eintrag) return;
+        if (!await frageEntfernen(eintrag.name ?? "")) return;
+        // Neu lesen: Waehrend die Frage offen stand, kann sich die Liste
+        // geaendert haben (ein Dreh, ein gespeicherter Name).
+        const aktuell = game.settings.get(MODUL, "players");
+        const pos = eintrag.id ? aktuell.findIndex(p => p.id === eintrag.id) : index;
+        if (pos < 0) return;
+        aktuell.splice(pos, 1);
+        await game.settings.set(MODUL, "players", aktuell);
         this.render();
     }
 
-    /**
-     * Wirklich entfernen?
-     *
-     * Ein Spieler war mit einem Tipp aus der Liste, und es gibt kein
-     * Rueckgaengig - die Liste ist eine Welteinstellung, keine
-     * Dokumenthistorie. Also fragen wir.
-     *
-     * `DialogV2` und nicht der alte Dialog: Dass die Fenster dieses Moduls
-     * noch auf `FormApplication` stehen, zwingt nicht dazu, auch die
-     * Nachfragen alt zu bauen - und es ist derselbe Dialog wie in den
-     * uebrigen Ninjo-Modulen. Wegklicken und Escape zaehlen als Nein.
-     */
-    async _frageEntfernen(name) {
-        return foundry.applications.api.DialogV2.confirm({
-            window: { title: game.i18n.localize("WHEEL.Confirm.RemoveTitle") },
-            content: `<p>${game.i18n.format("WHEEL.Confirm.RemoveBody", { name })}</p>`,
-            yes: { label: game.i18n.localize("WHEEL.Confirm.RemoveYes") },
-            no: { label: game.i18n.localize("WHEEL.Confirm.Cancel"), default: true },
-            rejectClose: false
-        });
-    }
-
-    async _onTogglePlayer(event) {
+    static async #onTogglePlayer(event, target) {
         event.preventDefault();
-        const index = event.currentTarget.dataset.index;
-        const players = game.settings.get("ninjos-player-wheel", "players");
+        const index = Number(target.dataset.index);
+        const players = game.settings.get(MODUL, "players");
+        if (!players[index]) return;
         players[index].active = !players[index].active;
-        await game.settings.set("ninjos-player-wheel", "players", players);
+        await game.settings.set(MODUL, "players", players);
         this.render();
     }
 
-    async _onResetStatus(event) {
+    static async #onResetStatus(event) {
         event.preventDefault();
-        const players = game.settings.get("ninjos-player-wheel", "players");
+        const players = game.settings.get(MODUL, "players");
         players.forEach(p => p.wasSelected = false);
-        await game.settings.set("ninjos-player-wheel", "players", players);
+        await game.settings.set(MODUL, "players", players);
         this.render();
     }
 
-    async _onSpin(event) {
+    static async #onSpin(event) {
         event.preventDefault();
         const lauf = drehen();
         if (!lauf) return;
 
         // Auto Close Window
-        if (game.settings.get("ninjos-player-wheel", "autoCloseControl")) {
+        if (game.settings.get(MODUL, "autoCloseControl")) {
             this.close();
         }
+        // Ein geschlossenes Fenster oeffnet `render()` ohne `force` nicht wieder.
         lauf.then(() => this.render());
     }
 
-    async _onCloseWheel(event) {
+    static async #onCloseWheel(event) {
         event.preventDefault();
 
         // Emit Socket (broadcast to everyone)
-        game.socket.emit("module.ninjos-player-wheel", { type: "close" });
+        game.socket.emit(`module.${MODUL}`, { type: "close" });
 
         // Also close for GM
         WheelDisplay.closeAll();

@@ -1,3 +1,5 @@
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
 /**
  * Der Text ueber dem Gewinner: der eigene aus dem Dreh oder der Standard in
  * der Sprache dieses Clients ("Auswahl:", "Chosen:").
@@ -14,48 +16,86 @@ export function maskiere(text) {
     return s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 }
 
-export class WheelDisplay extends Application {
-    constructor(options = {}) {
-        super(options);
-        this.winner = options.winner;
-        this.duration = options.duration || 6000;
-        this.segments = options.segments || [];
-        this.label = options.label ?? null;
+/** Wie lange das Rad nach dem Ende ausblendet, in Millisekunden. */
+const AUSBLENDEN = 300;
+
+/**
+ * Das Rad selbst, auf jedem Client, der den Dreh bekommt.
+ *
+ * Seit 14.2611.1 ein ApplicationV2-Fenster; die alte `Application` faellt mit
+ * Foundry 16 weg. Der Rahmen bleibt (Kopfzeile per CSS ausgeblendet), damit
+ * `.window-content` und die Kennung `#ninjos-player-wheel-display` dieselben
+ * sind wie vorher: Auf beide zielen die Regeln in `module.css`, und die
+ * Klasse `common-display` haengt weiter am Fenster fuer Monk's Common Display.
+ */
+export class WheelDisplay extends HandlebarsApplicationMixin(ApplicationV2) {
+    /**
+     * @param {object} [daten]  Der Dreh: `winner`, `segments`, `duration`, `label`.
+     *   Er kommt ueber den Socket und wird bewusst nicht als Fensteroption
+     *   uebergeben, sonst mischte ApplicationV2 ihn in seine Optionen.
+     */
+    constructor(daten = {}) {
+        super({});
+        this.winner = daten.winner;
+        this.duration = daten.duration || 6000;
+        this.segments = daten.segments || [];
+        this.label = daten.label ?? null;
+        /** Laufende Zeitgeber, damit ein frueh geschlossenes Rad keine mehr hat. */
+        this._zeitgeber = [];
     }
 
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            id: "ninjos-player-wheel-display",
-            template: "modules/ninjos-player-wheel/templates/wheel.hbs",
-            width: 600,
-            height: 600,
+    static DEFAULT_OPTIONS = {
+        id: "ninjos-player-wheel-display",
+        classes: ["wheel-window", "common-display"],
+        window: {
+            frame: true,
+            positioned: true,
+            title: "",
             minimizable: false,
-            resizable: false,
-            classes: super.defaultOptions.classes.concat(["wheel-window", "common-display"]),
-            popOut: true
-        });
-    }
+            resizable: false
+        },
+        position: {
+            width: 600,
+            height: 600
+        }
+    };
 
-    static show(data) {
-        new WheelDisplay(data).render(true);
+    static PARTS = {
+        rad: { template: "modules/ninjos-player-wheel/templates/wheel.hbs" }
+    };
+
+    /**
+     * Ein Rad zeigen. Laeuft noch eins, geht es vorher zu.
+     *
+     * Die Kennung ist fest, und ApplicationV2 fuehrt je Kennung genau ein
+     * Fenster. Ein zweites mit derselben Kennung ersetzte das Element des
+     * ersten im Dokument, und dessen Zeitgeber schlossen danach das neue.
+     */
+    static async show(data) {
+        const laufend = [...foundry.applications.instances.values()].filter(app => app instanceof WheelDisplay);
+        await Promise.all(laufend.map(app => app.close({ animate: false })));
+        return new WheelDisplay(data).render({ force: true });
     }
 
     static closeAll() {
-        Object.values(ui.windows).forEach(app => {
-            if (app instanceof WheelDisplay) {
-                app.close();
-            }
-        });
+        for (const app of [...foundry.applications.instances.values()]) {
+            if (app instanceof WheelDisplay) app.close();
+        }
     }
 
-    getData() {
+    /** Ein Zeitgeber, der mit dem Fenster endet. */
+    _spaeter(fn, ms) {
+        this._zeitgeber.push(setTimeout(fn, ms));
+    }
+
+    async _prepareContext(options) {
+        const context = await super._prepareContext(options);
         const segments = this.segments || [];
         const radius = 280;
         const center = { x: 300, y: 300 }; // viewBox 0 0 600 600
 
         const numSegments = segments.length;
         const angleRad = (Math.PI * 2) / numSegments;
-
 
         const enhancedSegments = segments.map((s, i) => {
             const startAngle = i * angleRad;
@@ -110,24 +150,48 @@ export class WheelDisplay extends Application {
             };
         });
 
-        return {
+        return Object.assign(context, {
             segments: enhancedSegments,
             winner: this.winner
-        };
+        });
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
+    /** Der Gewinner gross in der Mitte. `sofort` ist die Fassung ohne Drehung. */
+    _zeigeGewinner(inhalt, { sofort = false } = {}) {
+        const overlay = document.createElement("div");
+        overlay.className = sofort ? "winner-overlay winner-overlay-sofort" : "winner-overlay";
+        overlay.innerHTML = `<div class="winner-label">${maskiere(gewinnerText(this.label))}</div>
+            <div class="winner-name">${maskiere(this.winner?.name)}</div>`;
+        inhalt.append(overlay);
+        return overlay;
+    }
+
+    _konfetti() {
+        if (!window.confetti) return;
+        window.confetti({
+            particleCount: 250,
+            spread: 100,
+            origin: { y: 0.6 },
+            zIndex: 2147483647
+        });
+    }
+
+    async _onRender(context, options) {
+        await super._onRender(context, options);
+        // Das Rad dreht genau einmal, beim ersten Zeichnen.
+        if (!options.isFirstRender) return;
 
         // --- MONK'S COMMON DISPLAY NUKE ---
-        if (this.element && this.element[0]) {
-            this.element[0].classList.add("wheel-fullscreen-class");
-            this.element[0].style.setProperty("display", "flex", "important"); /* center contents */
-            this.element[0].style.setProperty("visibility", "visible", "important");
-            this.element[0].style.setProperty("opacity", "1", "important");
-        }
+        const el = this.element;
+        el.classList.add("wheel-fullscreen-class");
+        el.style.setProperty("display", "flex", "important"); /* center contents */
+        el.style.setProperty("visibility", "visible", "important");
+        el.style.setProperty("opacity", "1", "important");
 
-        const wheelGroup = html.find(".wheel-inner")[0];
+        // Der gerenderte Teil, wie frueher `html` in activateListeners.
+        const inhalt = this.parts?.rad ?? el.querySelector(".window-content > .wheel-window") ?? el;
+        const wheelGroup = inhalt.querySelector(".wheel-inner");
+        if (!wheelGroup || !this.winner) return;
 
         // Rotation Logic
         const winnerIndex = this.segments.findIndex(s => s.id === this.winner.id);
@@ -147,33 +211,19 @@ export class WheelDisplay extends Application {
 
         if (isInstant) {
             // INSTANT REVEAL (Single Player)
-            html.find(".wheel-container").hide();
+            const container = inhalt.querySelector(".wheel-container");
+            if (container) container.style.display = "none";
 
-            // Confetti!
-            if (window.confetti) {
-                window.confetti({
-                    particleCount: 250,
-                    spread: 100,
-                    origin: { y: 0.6 },
-                    zIndex: 2147483647
-                });
-            }
+            this._konfetti();
 
             // WINNER REVEAL OVERLAY
-            const winnerName = maskiere(this.winner.name);
-            const overlay = $(`<div class="winner-overlay" style="background: rgba(0, 0, 0, 0.4); border: none; box-shadow: none;">
-                <div class="winner-label" style="text-shadow: 0 4px 8px black; font-size: 2.5em;">${maskiere(gewinnerText(this.label))}</div>
-                <div class="winner-name" style="text-shadow: 0 6px 12px black, 0 0 20px #daa520; font-size: 5em;">${winnerName}</div>
-            </div>`);
-            html.append(overlay);
+            const overlay = this._zeigeGewinner(inhalt, { sofort: true });
 
             // Animate in
-            setTimeout(() => overlay.addClass("visible"), 50);
+            this._spaeter(() => overlay.classList.add("visible"), 50);
 
             // Close after a delay
-            setTimeout(() => {
-                this.close();
-            }, duration + 5000); // Wait 6 seconds total
+            this._spaeter(() => this.close(), duration + 5000); // Wait 6 seconds total
 
         } else {
             // LONG SPIN (Suspense)
@@ -183,41 +233,46 @@ export class WheelDisplay extends Application {
             wheelGroup.style.transform = `rotate(${rotationNeeded}deg)`;
 
             // Finish / Reveal
-            setTimeout(() => {
+            this._spaeter(() => {
                 // Highlight Winner
-                const textElements = html.find("text");
-                if (textElements[winnerIndex]) {
-                    const winnerText = textElements[winnerIndex];
-                    winnerText.classList.add("winner-text");
-                }
+                const textElements = inhalt.querySelectorAll("text");
+                if (textElements[winnerIndex]) textElements[winnerIndex].classList.add("winner-text");
 
-                // Confetti!
-                if (window.confetti) {
-                    window.confetti({
-                        particleCount: 250,
-                        spread: 100,
-                        origin: { y: 0.6 },
-                        zIndex: 2147483647
-                    });
-                }
+                this._konfetti();
 
                 // WINNER REVEAL OVERLAY
-                const winnerName = maskiere(this.winner.name);
-                const overlay = $(`<div class="winner-overlay">
-                    <div class="winner-label">${maskiere(gewinnerText(this.label))}</div>
-                    <div class="winner-name">${winnerName}</div>
-                </div>`);
-                html.append(overlay);
+                const overlay = this._zeigeGewinner(inhalt);
 
                 // Animate in
-                setTimeout(() => overlay.addClass("visible"), 100);
+                this._spaeter(() => overlay.classList.add("visible"), 100);
 
                 // Close after a delay (enough time to celebrate)
-                setTimeout(() => {
-                    this.close();
-                }, 6000);
+                this._spaeter(() => this.close(), 6000);
 
             }, duration);
         }
+    }
+
+    /**
+     * Zu wie bisher: kurz ausblenden statt zusammenklappen.
+     *
+     * ApplicationV2 klappt ein Fenster beim Schliessen ueber `max-height` zu.
+     * Beim Rad haelt das CSS die Groesse fest, die Animation liefe ins Leere
+     * und das Fenster stuende bis zu einer Sekunde reglos da. Deshalb schliesst
+     * es ohne die eingebaute Animation und blendet vorher selbst aus.
+     */
+    async close(options = {}) {
+        return super.close({ ...options, animate: false, ausblenden: options.animate !== false });
+    }
+
+    async _preClose(options) {
+        await super._preClose(options);
+        for (const id of this._zeitgeber) clearTimeout(id);
+        this._zeitgeber = [];
+        const el = this.element;
+        if (!options.ausblenden || !el?.isConnected) return;
+        el.style.setProperty("transition", `opacity ${AUSBLENDEN}ms ease`, "important");
+        el.style.setProperty("opacity", "0", "important");
+        await new Promise(resolve => setTimeout(resolve, AUSBLENDEN));
     }
 }

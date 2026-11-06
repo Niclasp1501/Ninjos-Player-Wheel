@@ -1,5 +1,16 @@
 # Changelog
 
+## [14.2611.1] - Every window on ApplicationV2
+
+### Changed
+- **The wheel, the control window and the player settings run on ApplicationV2.** They were still built on Foundry's old `Application` and `FormApplication`, which Foundry 16 removes. They look and work as before: the same spin, confetti and reveal for everyone at the table, the same buttons, and the same settings. There is nothing to do after updating, and Foundry 13 is still supported.
+- Opening the control window or the player settings again (Shift+W, the wheel tool or a macro) brings the open window to the front instead of stacking a second copy on top.
+- A spin that arrives while the previous wheel is still on screen now replaces it. Before, two wheels could end up on top of each other.
+
+### Fixed
+- The question before removing a player showed HTML in a player's name as markup. The name is escaped now, as everywhere else.
+- The colour field in the player settings had no name for screen readers. It has one now, in every language.
+
 ## [14.2610.1] - Your own text above the winner, and a wheel that remembers again
 
 ### Added
