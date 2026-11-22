@@ -20,6 +20,8 @@ the end a name sits in the middle, with a shower of confetti.
 It works for anything that should be shared out fairly: who takes the spotlight in the next scene,
 who gets first pick of the loot, or who has to pull the lever nobody is quite sure about.
 
+![The wheel spinning for everyone at the table](docs/images/spin.png)
+
 ### Fair, even across several nights
 
 Whoever gets picked counts as done and stays off the wheel until everyone else has had their turn
@@ -36,6 +38,8 @@ The wheel doesn't just appear on your screen. It shows up at the same time for e
 to the world, and everyone sees the same spin. The result is also posted to the chat, so it can be
 looked up later. A few seconds after the reveal, the wheel closes by itself for everyone.
 
+![The reveal: the chosen name in the middle, with confetti](docs/images/winner.png)
+
 ### Getting started
 
 Open the wheel with `Shift + W` or with the wheel icon in the token controls. Both are only
@@ -49,6 +53,10 @@ wheel's settings.
 
 If you like, your control window closes by itself on every spin. You set that in the module
 settings under **Auto-Close Control Window**.
+
+![The control window: who has had a turn, who is switched off, and the button that spins the wheel](docs/images/control.png)
+
+![The player settings: name, colour, active and done for every player](docs/images/config.png)
 
 ### Your own text
 
@@ -91,6 +99,8 @@ Das eignet sich für alles, was fair verteilt werden soll: wer in der nächsten 
 steht, wer sich zuerst etwas aus der Beute nehmen darf, oder wer den Hebel ziehen muss, bei dem
 niemand so recht weiß, was er bewirkt.
 
+![Das Rad dreht sich bei allen am Tisch zugleich](docs/images/spin.png)
+
 ### Fair, auch über mehrere Abende
 
 Wer ausgewählt wurde, gilt als erledigt und landet so lange nicht wieder auf dem Rad, bis alle
@@ -109,6 +119,8 @@ Welt verbunden ist, und alle sehen dieselbe Drehung. Das Ergebnis landet zusätz
 es auch später noch nachzulesen ist. Ein paar Sekunden nach der Auflösung schließt sich das Rad bei
 allen von selbst.
 
+![Die Auflösung: der gezogene Name in der Mitte, mit Konfetti](docs/images/winner.png)
+
 ### So legst du los
 
 Öffne das Rad mit `Shift + W` oder über das Radsymbol in der Token-Leiste. Beides steht nur dir als
@@ -123,6 +135,10 @@ im roten Kopf öffnet die Einstellungen des Rads.
 
 Wenn du möchtest, schließt sich dein Steuerfenster bei jedem Dreh von selbst. Das stellst du in den
 Moduleinstellungen unter **Steuerung automatisch schließen** ein.
+
+![Das Steuerfenster: wer schon dran war, wer abgeschaltet ist, und der Knopf, der das Rad dreht](docs/images/control.png)
+
+![Die Spielereinstellungen: Name, Farbe, aktiv und erledigt für jeden Spieler](docs/images/config.png)
 
 ### Eigener Text
 

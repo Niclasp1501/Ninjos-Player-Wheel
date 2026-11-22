@@ -32,7 +32,7 @@ jobs:
           echo "version=${version}" >> "$GITHUB_OUTPUT"
 
       - name: Create Module Archive
-        run: zip -r ./module.zip . -x ".git/*" ".github/*" "README.md" "CHANGELOG.md" "AGENTS.md" "*.code-workspace"
+        run: zip -r ./module.zip . -x ".git/*" ".github/*" "README.md" "CHANGELOG.md" "AGENTS.md" "*.code-workspace" "docs/*"
 
       # The release text is the changelog section of this version, as in every
       # Ninjo module. Until 14.2610.1 the release page stayed empty.
