@@ -121,6 +121,14 @@ export function insBildRuecken(app) {
   const el = element(app);
   if (!el || !el.isConnected) return;
 
+  /*
+   * **Ein minimiertes Fenster bleibt minimiert.** Foundry merkt sich die alte
+   * Groesse selbst und stellt sie beim Aufklappen wieder her. Setzten wir hier
+   * eine Hoehe, wuchs die Titelleiste bei jedem Neuzeichnen zu einem halben
+   * Fenster, das unten rechts im Weg lag (Spielabend 21.11.2026).
+   */
+  if (app.minimized || el.classList.contains("minimized")) return;
+
   const bildBreite = window.innerWidth;
   const bildHoehe = window.innerHeight;
   const hoechsteHoehe = bildHoehe - 2 * RAND;
