@@ -193,6 +193,29 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+/* ApplicationV2 gibt jedem Knopf display: flex, damit wird er zum Block und
+   stand unter seinem Nachbarn. Unter Application (V1) waren es Inline-Knoepfe
+   in einer Zeile; die Zeile kommt hier ausdruecklich zurueck. */
+.ninjos-player-wheel-container .header-actions,
+.ninjos-player-wheel-container .player-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+/* Dasselbe in den Spielereinstellungen: ApplicationV2 laesst jedes
+   label.checkbox mitwachsen, und der Name bekam nur noch ein Drittel der
+   Zeile. Die Haekchen sind so breit wie ihr Text, der Rest gehoert dem Namen. */
+#ninjos-player-wheel-config .player-item label.checkbox {
+    flex: 0 0 auto;
+}
+
+#ninjos-player-wheel-config .player-item input[type="text"] {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
 .ninjos-player-wheel-container .player-actions a {
     color: #666;
     margin-left: 8px;

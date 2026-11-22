@@ -8,6 +8,7 @@
 - A spin that arrives while the previous wheel is still on screen now replaces it. Before, two wheels could end up on top of each other.
 
 ### Fixed
+- **A minimized window stays minimized.** Every redraw set a height, also on a minimized window, which then grew from its title bar into half a window. The same fix went into Ninjo's Shops after a game night.
 - The question before removing a player showed HTML in a player's name as markup. The name is escaped now, as everywhere else.
 - The colour field in the player settings had no name for screen readers. It has one now, in every language.
 
